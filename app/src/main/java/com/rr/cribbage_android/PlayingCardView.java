@@ -1,0 +1,65 @@
+package com.rr.cribbage_android;
+
+import android.content.Context;
+import android.graphics.Outline;
+import android.graphics.Rect;
+import android.text.Layout;
+import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+public class PlayingCardView extends AppCompatImageView {
+    private boolean selected;
+    private int imageId;
+    private static int backId = R.drawable.back;
+    private static int [] cardIds = {R.drawable.clubs_ace,R.drawable.clubs_2,R.drawable.clubs_3,R.drawable.clubs_4,R.drawable.clubs_5,R.drawable.clubs_6,R.drawable.clubs_7,R.drawable.clubs_8,R.drawable.clubs_9,R.drawable.clubs_10,R.drawable.clubs_jack,R.drawable.clubs_king,R.drawable.clubs_queen,R.drawable.hearts_ace,R.drawable.hearts_2,R.drawable.hearts_3,R.drawable.hearts_4,R.drawable.hearts_5,R.drawable.hearts_6,R.drawable.hearts_7,R.drawable.hearts_8,R.drawable.hearts_9,R.drawable.hearts_10,R.drawable.hearts_jack,R.drawable.hearts_king,R.drawable.hearts_queen,R.drawable.spades_ace,R.drawable.spades_2,R.drawable.spades_3,R.drawable.spades_4,R.drawable.spades_5,R.drawable.spades_6,R.drawable.spades_7,R.drawable.spades_8,R.drawable.spades_9,R.drawable.spades_10,R.drawable.spades_jack,R.drawable.spades_king,R.drawable.spades_queen,R.drawable.diamonds_ace,R.drawable.diamonds_2,R.drawable.diamonds_3,R.drawable.diamonds_4,R.drawable.diamonds_5,R.drawable.diamonds_6,R.drawable.diamonds_7,R.drawable.diamonds_8,R.drawable.diamonds_9,R.drawable.diamonds_10,R.drawable.diamonds_jack,R.drawable.diamonds_king,R.drawable.diamonds_queen};
+
+    public PlayingCardView(Context context) {
+        super(context);
+        setUp();
+    }
+    public PlayingCardView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        setUp();
+    }
+    public PlayingCardView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        setUp();
+    }
+
+    private void setUp(){
+        this.setImageResource(R.drawable.back);
+        this.selected = false;
+        this.setAdjustViewBounds(true);
+        /* For drop shadow */
+//        this.setElevation(20);
+//        this.setOutlineProvider(new PlayingCardViewOutlineProvider());
+    }
+
+    public void toggleSelected(){
+        this.selected = !this.selected;
+        this.showCardFace(this.selected);
+    }
+
+    public void setCard(int cardNum){
+        this.imageId = cardIds[cardNum];
+    }
+
+    private void showCardFace(boolean show){
+        if(show) this.setImageResource(imageId);
+        else this.setImageResource(backId);
+    }
+
+    public static class PlayingCardViewOutlineProvider extends ViewOutlineProvider{
+        @Override
+        public void getOutline(View view, Outline outline) {
+            Rect rect = new Rect();
+            view.getDrawingRect(rect);
+            outline.setRoundRect( rect, 50);
+        }
+    }
+
+}
