@@ -66,8 +66,9 @@ public class HandLayout extends ConstraintLayout {
         PlayingCardView prev = null;
         for(int i = 0; i < this.hand_list.size(); i++){
             boolean is_last = i == this.hand_list.size()-1;
-            PlayingCardView pcv = new PlayingCardView(this.getContext());
-            pcv.setCard(i);
+//            PlayingCardView pcv = new PlayingCardView(this.getContext());
+            PlayingCardView pcv = this.hand_list.get(i);
+//            pcv.setCard(i);
 
             pcv.setId(View.generateViewId());
             set.constrainHeight(pcv.getId(), ConstraintSet.WRAP_CONTENT);
@@ -88,6 +89,8 @@ public class HandLayout extends ConstraintLayout {
                 }
             }
             prev = pcv;
+
+            ((ViewGroup)pcv.getParent()).removeView(pcv);
             this.addView(pcv);
         }
         set.applyTo(this);
@@ -99,6 +102,22 @@ public class HandLayout extends ConstraintLayout {
             PlayingCardView pcv = (PlayingCardView)v;
             TransitionManager.beginDelayedTransition((ViewGroup) v.getRootView());
             pcv.toggleSelected();
+            HandLayout discard = ((ViewGroup)v.getRootView()).findViewById(R.id.PlayerDiscard);
+            HandLayout hand = ((ViewGroup)v.getRootView()).findViewById(R.id.HandLayoutPlayer);
+            hand.removeCard(pcv);
+            discard.addCard(pcv);
+
+        }
+    }
+
+    static class CardReturnListener implements OnClickListener{
+        @Override
+        public void onClick(View v) {
+            PlayingCardView pcv = (PlayingCardView)v;
+            TransitionManager.beginDelayedTransition((ViewGroup) v.getRootView());
+            pcv.toggleSelected();
+            HandLayout hand = ((ViewGroup)v.getRootView()).findViewById(R.id.HandLayoutPlayer);
+            hand.addCard(pcv);
         }
     }
 

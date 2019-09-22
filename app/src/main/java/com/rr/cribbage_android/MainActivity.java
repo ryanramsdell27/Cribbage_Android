@@ -29,7 +29,9 @@ public class MainActivity extends Activity {
         HandLayout hl = findViewById(R.id.HandLayoutPlayer);
         ArrayList<PlayingCardView> hand = new ArrayList<>();
         for(int i = 0; i < 6; i++){
-            hand.add(new PlayingCardView(this));
+            PlayingCardView pcv = new PlayingCardView(this);
+            pcv.setCard(i);
+            hand.add(pcv);
         }
         hl.addHand(hand);
     }
