@@ -36,8 +36,6 @@ public class HandLayout extends ConstraintLayout {
      * Called from the constructors so things are the same
      */
     private void setUp(Context context){
-//        LayoutInflater mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        mInflater.inflate(R.layout.hand_layout, this, true);
     }
 
     public void addCard(PlayingCardView card){

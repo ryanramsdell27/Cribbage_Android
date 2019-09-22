@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="?android:attr/actionBarSize"
+                        android:paddingTop="24dp"
+                        android:background="@color/colorPrimaryDark"
+                        android:elevation="4dp">
+
+</android.widget.Toolbar>
+
+<!--        TODO Need to adjust toolbar to fitsSystemWindows rather than doing hardcoded top margin-->
