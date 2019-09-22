@@ -71,9 +71,11 @@ public class HandLayout extends ConstraintLayout {
 //            pcv.setCard(i);
 
             pcv.setId(View.generateViewId());
+            set.clear(pcv.getId());
+
             set.constrainHeight(pcv.getId(), ConstraintSet.WRAP_CONTENT);
             set.constrainWidth(pcv.getId(), ConstraintSet.WRAP_CONTENT);
-            pcv.setOnClickListener(new CardClickListener());
+            if(!pcv.hasOnClickListeners()) pcv.setOnClickListener(new CardClickListener());
             /* Connect to previous card or edge */
             if(prev == null){
                 set.connect(pcv.getId(), ConstraintSet.START, this.getId(), ConstraintSet.START);
@@ -90,7 +92,8 @@ public class HandLayout extends ConstraintLayout {
             }
             prev = pcv;
 
-            ((ViewGroup)pcv.getParent()).removeView(pcv);
+            ViewGroup pcv_parent = ((ViewGroup)pcv.getParent());
+            if(pcv_parent != null) pcv_parent.removeView(pcv);
             this.addView(pcv);
         }
         set.applyTo(this);
@@ -104,6 +107,7 @@ public class HandLayout extends ConstraintLayout {
             pcv.toggleSelected();
             HandLayout discard = ((ViewGroup)v.getRootView()).findViewById(R.id.PlayerDiscard);
             HandLayout hand = ((ViewGroup)v.getRootView()).findViewById(R.id.HandLayoutPlayer);
+            pcv.setOnClickListener(new CardReturnListener());
             hand.removeCard(pcv);
             discard.addCard(pcv);
 
@@ -113,10 +117,14 @@ public class HandLayout extends ConstraintLayout {
     static class CardReturnListener implements OnClickListener{
         @Override
         public void onClick(View v) {
+            Log.d("Card return listener","On click called");
             PlayingCardView pcv = (PlayingCardView)v;
             TransitionManager.beginDelayedTransition((ViewGroup) v.getRootView());
             pcv.toggleSelected();
+            HandLayout discard = ((ViewGroup)v.getRootView()).findViewById(R.id.PlayerDiscard);
             HandLayout hand = ((ViewGroup)v.getRootView()).findViewById(R.id.HandLayoutPlayer);
+            pcv.setOnClickListener(new CardClickListener());
+            discard.removeCard(pcv);
             hand.addCard(pcv);
         }
     }
