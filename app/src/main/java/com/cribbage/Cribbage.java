@@ -41,13 +41,14 @@ public class Cribbage implements Game {
 
         /* Deal and discard, also set up the crib */
         for(Player p : this.players){
-            p.hand.clear();
-            p.hand.add(deck.deal(6));
+            Hand hand = p.getHand();
+            hand.clear();
+            hand.add(deck.deal(6));
 //            System.out.print(p.toString() + " --> "); // TESTING
             crib.add(p.discard());
             p.setPeg();
-            p.hand.add(starter);
-            p.hand.setStarter(starter);
+            hand.add(starter);
+            hand.setStarter(starter);
 //            System.out.println(p.toString() + " " + p.hand.scoreHand()); // TESTING
         }
         this.crib.clear();
@@ -97,7 +98,7 @@ public class Cribbage implements Game {
         /* Score hands and crib */
         for(int i = 0; i < this.players.length; i++){
             Player cur_play = this.players[(this.dealer+i+1)%this.players.length];
-            cur_play.increaseScore(cur_play.hand.scoreHand());
+            cur_play.increaseScore(cur_play.getHand().scoreHand());
             if(isDone()) return;
         }
         this.players[this.dealer].increaseScore(this.crib.scoreHand());
@@ -126,8 +127,8 @@ public class Cribbage implements Game {
      */
     public boolean isDone(){
         for(Player p: players){
-            if(p.score >= 121){
-                p.score = 121;
+            if(p.getScore() >= 121){
+                p.setScore(121);
                 return true;
             }
         }

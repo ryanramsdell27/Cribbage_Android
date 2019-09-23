@@ -13,9 +13,9 @@ public abstract class CPUPlayer extends Player {
             total += c.value;
         }
         //TODO iterate over each card seeing what will return max points
-        for(Card c:this.peg){
+        for(Card c:this.getPegHand()){
             if(c.value + total <= 31) {
-                this.peg.remove(c);
+                this.getPegHand().remove(c);
                 return c;
             }
         }
