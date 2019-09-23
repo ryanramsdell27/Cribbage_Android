@@ -93,4 +93,12 @@ public abstract class Player {
     void setDealer(boolean b){
         this.dealer = b;
     }
+
+    /**
+     * Returns the hand
+     * @return the hand object
+     */
+    public Hand getHand() {
+        return hand;
+    }
 }

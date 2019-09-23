@@ -18,8 +18,7 @@ public class PlayingCardView extends AppCompatImageView {
     private Card card;
 
     private static int backId = R.drawable.back;
-    private static int [] cardIds = {R.drawable.clubs_ace,R.drawable.clubs_2,R.drawable.clubs_3,R.drawable.clubs_4,R.drawable.clubs_5,R.drawable.clubs_6,R.drawable.clubs_7,R.drawable.clubs_8,R.drawable.clubs_9,R.drawable.clubs_10,R.drawable.clubs_jack,R.drawable.clubs_king,R.drawable.clubs_queen,R.drawable.hearts_ace,R.drawable.hearts_2,R.drawable.hearts_3,R.drawable.hearts_4,R.drawable.hearts_5,R.drawable.hearts_6,R.drawable.hearts_7,R.drawable.hearts_8,R.drawable.hearts_9,R.drawable.hearts_10,R.drawable.hearts_jack,R.drawable.hearts_king,R.drawable.hearts_queen,R.drawable.spades_ace,R.drawable.spades_2,R.drawable.spades_3,R.drawable.spades_4,R.drawable.spades_5,R.drawable.spades_6,R.drawable.spades_7,R.drawable.spades_8,R.drawable.spades_9,R.drawable.spades_10,R.drawable.spades_jack,R.drawable.spades_king,R.drawable.spades_queen,R.drawable.diamonds_ace,R.drawable.diamonds_2,R.drawable.diamonds_3,R.drawable.diamonds_4,R.drawable.diamonds_5,R.drawable.diamonds_6,R.drawable.diamonds_7,R.drawable.diamonds_8,R.drawable.diamonds_9,R.drawable.diamonds_10,R.drawable.diamonds_jack,R.drawable.diamonds_king,R.drawable.diamonds_queen};
-
+    private static int [] cardIds = {R.drawable.hearts_ace,R.drawable.hearts_2,R.drawable.hearts_3,R.drawable.hearts_4,R.drawable.hearts_5,R.drawable.hearts_6,R.drawable.hearts_7,R.drawable.hearts_8,R.drawable.hearts_9,R.drawable.hearts_10,R.drawable.hearts_jack,R.drawable.hearts_queen,R.drawable.hearts_king,R.drawable.diamonds_ace,R.drawable.diamonds_2,R.drawable.diamonds_3,R.drawable.diamonds_4,R.drawable.diamonds_5,R.drawable.diamonds_6,R.drawable.diamonds_7,R.drawable.diamonds_8,R.drawable.diamonds_9,R.drawable.diamonds_10,R.drawable.diamonds_jack,R.drawable.diamonds_queen,R.drawable.diamonds_king,R.drawable.clubs_ace,R.drawable.clubs_2,R.drawable.clubs_3,R.drawable.clubs_4,R.drawable.clubs_5,R.drawable.clubs_6,R.drawable.clubs_7,R.drawable.clubs_8,R.drawable.clubs_9,R.drawable.clubs_10,R.drawable.clubs_jack,R.drawable.clubs_queen,R.drawable.clubs_king,R.drawable.spades_ace,R.drawable.spades_2,R.drawable.spades_3,R.drawable.spades_4,R.drawable.spades_5,R.drawable.spades_6,R.drawable.spades_7,R.drawable.spades_8,R.drawable.spades_9,R.drawable.spades_10,R.drawable.spades_jack,R.drawable.spades_queen,R.drawable.spades_king};
     public PlayingCardView(Context context) {
         super(context);
         setUp();
@@ -37,8 +36,6 @@ public class PlayingCardView extends AppCompatImageView {
         this.setImageResource(R.drawable.back);
         this.selected = false;
         this.setAdjustViewBounds(true);
-        this.card = new Card(43);
-        Log.d(TAG,this.card.toString());
         /* For drop shadow */
 //        this.setElevation(20);
 //        this.setOutlineProvider(new PlayingCardViewOutlineProvider());
@@ -51,6 +48,7 @@ public class PlayingCardView extends AppCompatImageView {
 
     public void setCard(int cardNum){
         this.imageId = cardIds[cardNum];
+        this.card = new Card(cardNum);
     }
 
     private void showCardFace(boolean show){

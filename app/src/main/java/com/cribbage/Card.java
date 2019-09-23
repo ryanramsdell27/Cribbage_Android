@@ -45,6 +45,10 @@ public class Card implements Comparable<Card> {
         return rank_str + suit_str;
     }
 
+    public int getInt(){
+        return 13*this.suit + this.rank - 1;
+    }
+
     @Override
     public int compareTo(Card o) {
         return this.rank - o.rank;

@@ -97,7 +97,13 @@ public class Hand implements Iterable<Card> {
         this.starter = c;
     }
 
-
+    /**
+     * Returns the list of cards in the hand
+     * @return the hand
+     */
+    public List getHand(){
+        return this.hand;
+    }
     /**
      * Scores this hand and returns its value
      * TODO keep list(s) of scoring sets to display to user which parts scored

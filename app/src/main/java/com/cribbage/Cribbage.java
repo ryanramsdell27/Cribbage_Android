@@ -16,14 +16,14 @@ public class Cribbage implements Game {
     /**
      * Creates a new deck, shuffles, and deals to players
      */
-    public Cribbage(int dealer){
+    public Cribbage(Player player1, Player player2, int dealer){
         this.crib = new Hand();
         this.deck = new Deck();
         this.deck.shuffle();
 
         this.players = new Player[2];
-        this.players[0] = new CPUPlayerMIN();
-        this.players[1] = new CPUPlayerAVG();
+        this.players[0] = player1;
+        this.players[1] = player2;
 
         this.dealer = dealer;
         this.players[this.dealer].setDealer(true);
