@@ -101,7 +101,7 @@ public class Hand implements Iterable<Card> {
      * Returns the list of cards in the hand
      * @return the hand
      */
-    public List getHand(){
+    public List<Card> getHand(){
         return this.hand;
     }
     /**

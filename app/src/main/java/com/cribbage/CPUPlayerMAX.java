@@ -8,14 +8,14 @@ public class CPUPlayerMAX extends CPUPlayer {
 
     @Override
     public Card[] discard() {
-        Iterator<ArrayList<Card>> comb_it = this.hand.getCombinationIterator(4);
+        Iterator<ArrayList<Card>> comb_it = this.getHand().getCombinationIterator(4);
         int best_score = -10000; //TODO define this better so it makes sense that this is unattainable (-52*2?)
-        Card [] dis = new Card[this.hand.size()-4];
+        Card [] dis = new Card[this.getHand().size()-4];
         Card [] copy_list = new Card[4];
         while(comb_it.hasNext()){
             ArrayList<Card> test_set = comb_it.next();
             ArrayList<Card> temp_dis = new ArrayList<Card>(dis.length);
-            for(Card c:this.hand){
+            for(Card c:this.getHand()){
                 if(!test_set.contains(c)) temp_dis.add(c);
             }
             int penalty = 0;
@@ -26,7 +26,7 @@ public class CPUPlayerMAX extends CPUPlayer {
 
             while(card_it.hasNext()){
                 Card test_card = card_it.next();
-                if(this.hand.contains(test_card)) continue;
+                if(this.getHand().contains(test_card)) continue;
 
                 Hand test_hand = new Hand();
                 test_hand.add(test_set.toArray(copy_list));

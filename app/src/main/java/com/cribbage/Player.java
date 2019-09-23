@@ -6,13 +6,13 @@ import java.util.ArrayList;
  * Player objects used for making play decisions
  */
 public abstract class Player {
-    int score;
+    private int score;
     boolean dealer;
-    Hand hand;
-    Hand peg;
+    private Hand hand;
+    private Hand peg;
 
     abstract Card peg(ArrayList<Card> peg_pile);
-    abstract Card [] discard();
+    public abstract Card [] discard();
 
     Card[] discard(Card [] cards){
         Card [] ret = new Card[cards.length];
@@ -40,6 +40,14 @@ public abstract class Player {
         for(Card c : this.hand){
             this.peg.add(c);
         }
+    }
+
+    /**
+     * Returns the cards that can still be pegged
+     * @return The peg hand
+     */
+    public Hand getPegHand(){
+        return this.peg;
     }
 
     /**
@@ -72,8 +80,16 @@ public abstract class Player {
      * Query the score value
      * @return The score of the Player
      */
-    int getScore(){
+    public int getScore(){
         return this.score;
+    }
+
+    /**
+     * Sets the score of the player
+     * @param score The value to set the score to
+     */
+    public void setScore(int score){
+        this.score = score;
     }
 
     /**
