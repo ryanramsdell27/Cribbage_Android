@@ -139,7 +139,7 @@ public class Cribbage implements Game {
      * Makes an array of the scores
      * @return An array of the scores of the players
      */
-    int [] getScore(){
+    public int [] getScore(){
         int [] scores = new int[this.players.length];
         for(int i = 0; i < this.players.length; i++){
             scores[i] = this.players[i].getScore();

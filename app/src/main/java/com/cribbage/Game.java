@@ -20,4 +20,10 @@ public interface Game {
      */
     boolean isDone();
 
+    /**
+     * Returns an array holding the current scores
+     * @return int array of scores
+     */
+    int [] getScore();
+
 }
