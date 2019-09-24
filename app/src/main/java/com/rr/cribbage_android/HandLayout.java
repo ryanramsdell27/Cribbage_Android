@@ -1,15 +1,12 @@
 package com.rr.cribbage_android;
 
-import android.content.ClipData;
 import android.content.Context;
-import android.os.Build;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.*;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.constraintlayout.widget.Guideline;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +73,7 @@ public class HandLayout extends ConstraintLayout {
             set.constrainHeight(pcv.getId(), ConstraintSet.WRAP_CONTENT);
             set.constrainWidth(pcv.getId(), ConstraintSet.WRAP_CONTENT);
             if(!pcv.hasOnClickListeners()){
-                pcv.setOnClickListener(new CardClickListener ( this, (HandLayout)(getRootView().findViewById(R.id.PlayerDiscard))));
+                pcv.setOnClickListener(new CardClickListener ( this, (HandLayout)(getRootView().findViewById(R.id.DiscardPlayer))));
             }
 //            pcv.setOnTouchListener(new ClickDragListener());
 
