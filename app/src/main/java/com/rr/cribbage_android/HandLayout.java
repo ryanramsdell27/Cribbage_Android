@@ -1,6 +1,8 @@
 package com.rr.cribbage_android;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.nfc.Tag;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -15,6 +17,7 @@ public class HandLayout extends ConstraintLayout {
     private String TAG = "Hand Layout";
 
     private List<PlayingCardView> hand_list;
+    private int destination = 0;
 
     public HandLayout(Context context) {
         super(context);
@@ -22,6 +25,13 @@ public class HandLayout extends ConstraintLayout {
     }
     public HandLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.HandLayout, 0 ,0);
+        try{
+            this.destination = a.getResourceId(R.styleable.HandLayout_Destination, R.id.DiscardPilePlayer);
+        } finally {
+            a.recycle();
+        }
+
         setUp(context);
     }
     public HandLayout(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -33,6 +43,7 @@ public class HandLayout extends ConstraintLayout {
      * Called from the constructors so things are the same
      */
     private void setUp(Context context){
+        if(this.destination == 0) this.destination = R.id.DiscardPilePlayer;
     }
 
     public void addCard(PlayingCardView card){
@@ -63,19 +74,16 @@ public class HandLayout extends ConstraintLayout {
         PlayingCardView prev = null;
         for(int i = 0; i < this.hand_list.size(); i++){
             boolean is_last = i == this.hand_list.size()-1;
-//            PlayingCardView pcv = new PlayingCardView(this.getContext());
             PlayingCardView pcv = this.hand_list.get(i);
-//            pcv.setCard(i);
 
-            pcv.setId(View.generateViewId());
+            if(pcv.getId() == View.NO_ID) pcv.setId(View.generateViewId());
             set.clear(pcv.getId());
 
             set.constrainHeight(pcv.getId(), ConstraintSet.WRAP_CONTENT);
             set.constrainWidth(pcv.getId(), ConstraintSet.WRAP_CONTENT);
             if(!pcv.hasOnClickListeners()){
-                pcv.setOnClickListener(new CardClickListener ( this, (HandLayout)(getRootView().findViewById(R.id.DiscardPlayer))));
+                pcv.setOnClickListener(new CardClickListener ( this, (HandLayout)(getRootView().findViewById(this.destination))));
             }
-//            pcv.setOnTouchListener(new ClickDragListener());
 
             /* Connect to previous card or edge */
             if(prev == null){
@@ -121,6 +129,5 @@ public class HandLayout extends ConstraintLayout {
             this.destination = tmp;
         }
     }
-
 
 }

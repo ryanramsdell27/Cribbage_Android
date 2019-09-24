@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HandLayout">
+        <attr name="Type" format="enum">
+            <enum name="hand_player" value="0"/>
+            <enum name="hand_opponent" value="1"/>
+            <enum name="discard_player" value="2"/>
+            <enum name="discard_opponent" value="4"/>
+        </attr>
+        <attr name="Destination" format="reference"/>
+    </declare-styleable>
+</resources>
