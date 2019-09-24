@@ -34,6 +34,16 @@ public class WrapperCPUPlayer extends CPUPlayer {
     }
 
     @Override
+    public Card peg(ArrayList<Card> peg_pile){
+        return this.player.peg(peg_pile);
+    }
+
+    @Override
+    public Hand getPegHand(){
+        return this.player.getPegHand();
+    }
+
+    @Override
     public Card[] discard() {
         List<Card> ccl_hand = player.getHand().getHand();
 
@@ -48,4 +58,28 @@ public class WrapperCPUPlayer extends CPUPlayer {
 
         return this.player.discard();
     }
+
+    @Override
+    public boolean canPeg(ArrayList<Card> peg_pile){
+        return this.player.canPeg(peg_pile);
+    }
+    @Override
+    public void increaseScore(int score){
+        this.player.increaseScore(score);
+    }
+    @Override
+    public String toString() {
+        return this.player.toString();
+    }
+    @Override
+    public void setDealer(boolean b){
+        this.player.setDealer(b);
+    }
+
+    @Override
+    public void setPeg(){
+        this.player.setPeg();
+    }
+
+
 }

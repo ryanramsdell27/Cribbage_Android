@@ -11,7 +11,7 @@ public abstract class Player {
     private Hand hand;
     private Hand peg;
 
-    abstract Card peg(ArrayList<Card> peg_pile);
+    public abstract Card peg(ArrayList<Card> peg_pile);
     public abstract Card [] discard();
 
     Card[] discard(Card [] cards){
@@ -35,7 +35,7 @@ public abstract class Player {
     /**
      * Sets up this players pegging hand from the selected cards
      */
-    void setPeg(){
+    public void setPeg(){
         this.peg = new Hand();
         for(Card c : this.hand){
             this.peg.add(c);
@@ -56,7 +56,7 @@ public abstract class Player {
      * @param peg_pile The current stack of card
      * @return True if this player has a card that can be pegged
      */
-    boolean canPeg(ArrayList<Card> peg_pile){
+    public boolean canPeg(ArrayList<Card> peg_pile){
         int sum = 0;
         for(Card c:peg_pile){
             sum += c.value;
@@ -72,7 +72,7 @@ public abstract class Player {
      * Increases the score of this player by the specified amount
      * @param score Amount to increase score by
      */
-    void increaseScore(int score){
+    public void increaseScore(int score){
         this.score += score;
     }
 
@@ -106,7 +106,7 @@ public abstract class Player {
         return sb.toString();
     }
 
-    void setDealer(boolean b){
+    public void setDealer(boolean b){
         this.dealer = b;
     }
 
