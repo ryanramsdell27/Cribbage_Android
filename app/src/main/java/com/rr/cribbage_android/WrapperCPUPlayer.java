@@ -41,6 +41,7 @@ public class WrapperCPUPlayer extends CPUPlayer {
         for(Card c:ccl_hand){
             PlayingCardView pcv = new PlayingCardView(handLayout.getContext());
             pcv.setCard(c.getInt());
+            pcv.showCardFace(true);
             hand.add(pcv);
         }
         handLayout.addHand(hand);

@@ -13,7 +13,7 @@ import com.cribbage.Card;
 public class PlayingCardView extends AppCompatImageView {
     private final String TAG = "Playing card view";
 
-    private boolean selected;
+    private boolean faceUp;
     private int imageId;
     private Card card;
 
@@ -34,16 +34,16 @@ public class PlayingCardView extends AppCompatImageView {
 
     private void setUp(){
         this.setImageResource(R.drawable.back);
-        this.selected = false;
+        this.faceUp = false;
         this.setAdjustViewBounds(true);
         /* For drop shadow */
 //        this.setElevation(20);
 //        this.setOutlineProvider(new PlayingCardViewOutlineProvider());
     }
 
-    public void toggleSelected(){
-        this.selected = !this.selected;
-        this.showCardFace(this.selected);
+    public void toggleFaceUp(){
+        this.faceUp = !this.faceUp;
+        this.showCardFace(this.faceUp);
     }
 
     public void setCard(int cardNum){
@@ -51,9 +51,14 @@ public class PlayingCardView extends AppCompatImageView {
         this.card = new Card(cardNum);
     }
 
-    private void showCardFace(boolean show){
-        if(show) this.setImageResource(imageId);
-        else this.setImageResource(backId);
+    public void showCardFace(boolean show){
+        if(show){
+            this.setImageResource(imageId);
+        }
+        else{
+            this.setImageResource(backId);
+        }
+        this.faceUp = show;
     }
 
     public static class PlayingCardViewOutlineProvider extends ViewOutlineProvider{

@@ -113,7 +113,7 @@ public class HandLayout extends ConstraintLayout {
             Log.d("Card click listener", this.source.getId() + "-->" + this.destination.getId());
             PlayingCardView pcv = (PlayingCardView)v;
             TransitionManager.beginDelayedTransition((ViewGroup) v.getRootView());
-            pcv.toggleSelected();
+            pcv.toggleFaceUp();
             this.source.removeCard(pcv);
             this.destination.addCard(pcv);
             HandLayout tmp = this.source;

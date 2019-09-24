@@ -29,17 +29,7 @@ public class MainActivity extends Activity {
         WrapperCPUPlayer p2 = new WrapperCPUPlayer(new CPUPlayerAVG(), hl2);
         this.game = new Cribbage(p1,p2,0);
         this.game.step();
-//        List<Card> ccl_hand = p1.getHand().getHand();
-//
-//        HandLayout hl1 = findViewById(R.id.HandLayoutPlayer);
-//        ArrayList<PlayingCardView> hand = new ArrayList<>();
-//        for(Card c:ccl_hand){
-//            Log.d(TAG, c.toString());
-//            PlayingCardView pcv = new PlayingCardView(this);
-//            pcv.setCard(c.getInt());
-//            hand.add(pcv);
-//        }
-//        hl1.addHand(hand);
+
     }
 
 }
