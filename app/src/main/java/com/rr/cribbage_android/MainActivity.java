@@ -1,6 +1,8 @@
 package com.rr.cribbage_android;
 
 import android.app.Activity;
+import android.nfc.Tag;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.os.Bundle;
@@ -28,7 +30,11 @@ public class MainActivity extends Activity {
         WrapperCPUPlayer p1 = new WrapperCPUPlayer(new CPUPlayerAVG(), hl1);
         WrapperCPUPlayer p2 = new WrapperCPUPlayer(new CPUPlayerAVG(), hl2);
         this.game = new Cribbage(p1,p2,0);
-        this.game.step();
+//        this.game.step();
+        while(!this.game.isDone()) {
+            this.game.step();
+            Log.d(TAG, p1.getScore() + " " + p2.getScore());
+        }
 
     }
 
