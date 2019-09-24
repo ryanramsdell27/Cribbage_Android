@@ -75,10 +75,10 @@ public class HandLayout extends ConstraintLayout {
 
             set.constrainHeight(pcv.getId(), ConstraintSet.WRAP_CONTENT);
             set.constrainWidth(pcv.getId(), ConstraintSet.WRAP_CONTENT);
-//            if(!pcv.hasOnClickListeners()){
-//                pcv.setOnClickListener(new CardClickListener());
-//            }
-            pcv.setOnTouchListener(new ClickDragListener());
+            if(!pcv.hasOnClickListeners()){
+                pcv.setOnClickListener(new CardClickListener ( this, (HandLayout)(getRootView().findViewById(R.id.PlayerDiscard))));
+            }
+//            pcv.setOnTouchListener(new ClickDragListener());
 
             /* Connect to previous card or edge */
             if(prev == null){
@@ -103,82 +103,25 @@ public class HandLayout extends ConstraintLayout {
         set.applyTo(this);
     }
 
-//    static class CardClickListener implements OnClickListener {
-//        @Override
-//        public void onClick(View v) {
-//            PlayingCardView pcv = (PlayingCardView)v;
-//            TransitionManager.beginDelayedTransition((ViewGroup) v.getRootView());
-//            pcv.toggleSelected();
-//            HandLayout discard = ((ViewGroup)v.getRootView()).findViewById(R.id.PlayerDiscard);
-//            HandLayout hand = ((ViewGroup)v.getRootView()).findViewById(R.id.HandLayoutPlayer);
-//            pcv.setOnClickListener(new CardReturnListener());
-//            hand.removeCard(pcv);
-//            discard.addCard(pcv);
-//
-//        }
-//    }
-//
-//    static class CardReturnListener implements OnClickListener{
-//        @Override
-//        public void onClick(View v) {
-//            Log.d("Card return listener","On click called");
-//            PlayingCardView pcv = (PlayingCardView)v;
-//            TransitionManager.beginDelayedTransition((ViewGroup) v.getRootView());
-//            pcv.toggleSelected();
-//            HandLayout discard = ((ViewGroup)v.getRootView()).findViewById(R.id.PlayerDiscard);
-//            HandLayout hand = ((ViewGroup)v.getRootView()).findViewById(R.id.HandLayoutPlayer);
-//            pcv.setOnClickListener(new CardClickListener());
-//            discard.removeCard(pcv);
-//            hand.addCard(pcv);
-//        }
-//    }
+    static class CardClickListener implements OnClickListener {
+        private HandLayout destination, source;
 
-    class ClickDragListener implements View.OnTouchListener{
-
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    // Use clipdata for sending meta data
-                    ClipData clipData = ClipData.newPlainText("Card", "Some shit, possibly the card value?");
-
-                    DragShadowBuilder shadow = new DragShadowBuilder(v);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        v.startDragAndDrop(clipData, shadow, null, 0);
-                    } else {
-                        v.startDrag(clipData, shadow, null, 0);
-                    }
-                    v.setVisibility(INVISIBLE);
-                    return false;
-                case MotionEvent.ACTION_UP:
-                    Log.d(TAG, "Action up");
-                    v.setVisibility(View.VISIBLE);
-                    return true;
-                default:
-                    break;
-            }
-            return false;
+        public CardClickListener(HandLayout source, HandLayout destination){
+            super();
+            this.destination = destination;
+            this.source = source;
         }
-
-    }
-
-    class HandDragListener implements View.OnDragListener{
-
         @Override
-        public boolean onDrag(View v, DragEvent event) {
-
-            switch (event.getAction()) {
-                case DragEvent.ACTION_DRAG_STARTED:
-                    return true;
-                case DragEvent.ACTION_DRAG_EXITED:
-                    return true;
-                case DragEvent.ACTION_DROP:
-                    (Ha)
-                    return true;
-                default:
-                    return false;
-            }
+        public void onClick(View v) {
+            Log.d("Card click listener", this.source.getId() + "-->" + this.destination.getId());
+            PlayingCardView pcv = (PlayingCardView)v;
+            TransitionManager.beginDelayedTransition((ViewGroup) v.getRootView());
+            pcv.toggleSelected();
+            this.source.removeCard(pcv);
+            this.destination.addCard(pcv);
+            HandLayout tmp = this.source;
+            this.source = this.destination;
+            this.destination = tmp;
         }
     }
 
