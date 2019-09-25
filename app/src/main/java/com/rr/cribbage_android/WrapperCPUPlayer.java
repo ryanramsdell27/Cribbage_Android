@@ -1,11 +1,8 @@
 package com.rr.cribbage_android;
 
-import android.app.Activity;
-import android.util.Log;
 import com.cribbage.CPUPlayer;
 import com.cribbage.Card;
 import com.cribbage.Hand;
-import com.cribbage.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +18,15 @@ public class WrapperCPUPlayer extends CPUPlayer {
 
     @Override
     public Card[] discard() {
-        ((Activity) handLayout.getContext()).runOnUiThread(new sendDiscardUiUpdates());
+        List<Card> ccl_hand = player.getHand().getHand();
+        ArrayList<PlayingCardView> hand = new ArrayList<>();
+        for(Card c:ccl_hand){
+            PlayingCardView pcv = new PlayingCardView(handLayout.getContext());
+            pcv.setCard(c.getInt());
+            pcv.showCardFace(true);
+            hand.add(pcv);
+        }
+        handLayout.post(new SendDiscardUpdateUI(hand));
         return this.player.discard();
     }
 
@@ -67,18 +72,13 @@ public class WrapperCPUPlayer extends CPUPlayer {
         this.player.setPeg();
     }
 
-    class sendDiscardUiUpdates implements Runnable{
-
+    class SendDiscardUpdateUI implements Runnable{
+        private List<PlayingCardView> hand;
+        public SendDiscardUpdateUI(List<PlayingCardView> hand){
+            this.hand = hand;
+        }
         @Override
         public void run() {
-            List<Card> ccl_hand = player.getHand().getHand();
-            ArrayList<PlayingCardView> hand = new ArrayList<>();
-            for(Card c:ccl_hand){
-                PlayingCardView pcv = new PlayingCardView(handLayout.getContext());
-                pcv.setCard(c.getInt());
-                pcv.showCardFace(true);
-                hand.add(pcv);
-            }
             handLayout.addHand(hand);
         }
     }

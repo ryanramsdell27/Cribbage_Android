@@ -16,6 +16,7 @@ import java.util.Arrays;
 public class MainActivity extends Activity {
     private final String TAG = "Main activity";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
