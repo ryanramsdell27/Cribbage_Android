@@ -1,6 +1,7 @@
 package com.rr.cribbage_android;
 
 import android.os.ConditionVariable;
+import android.util.Log;
 import com.cribbage.CPUPlayer;
 import com.cribbage.Card;
 import com.cribbage.Hand;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WrapperCPUPlayer extends CPUPlayer {
+    private final String TAG = "WrapperCPUPlayer";
     CPUPlayer player;
     HandLayout handLayout;
     private ConditionVariable uiLock;
@@ -35,6 +37,22 @@ public class WrapperCPUPlayer extends CPUPlayer {
         handLayout.post(new SendDiscardUpdateUI(hand));
         uiLock.block();
         Card [] dis = this.player.discard();
+        final ArrayList<PlayingCardView> discardPile = new ArrayList<>(2);
+        for(PlayingCardView pcv: hand){
+            for(Card c: dis){
+                Log.d(TAG, pcv.getCard().toString() + " " + c.toString());
+                if(pcv.getCard().getInt() == c.getInt()) discardPile.add(pcv);
+            }
+        }
+        handLayout.post(new Runnable(){
+            @Override
+            public void run() {
+                for(PlayingCardView pcv : discardPile){
+                    pcv.performClick();
+                }
+            }
+        });
+
 //        for(PlayingCardView pcv : hand){
 //            for(Card c : dis){
 //                if(pcv.getCard().getInt() == c.getInt()) pcv.post(new Runnable() {

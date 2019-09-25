@@ -5,6 +5,7 @@ package com.cribbage;
  * @author Ryan
  */
 public class Card implements Comparable<Card> {
+    int val;
     int suit;
     int rank;
     int value;
@@ -14,6 +15,7 @@ public class Card implements Comparable<Card> {
      * @param init The int representation of this card
      */
     public Card(int init){
+        this.val = init;
         this.suit = init % 4;
         this.rank = init % 13 + 1;
         if(this.rank > 10) this.value = 10;
@@ -46,7 +48,7 @@ public class Card implements Comparable<Card> {
     }
 
     public int getInt(){
-        return 13*this.suit + this.rank - 1;
+        return this.val;
     }
 
     @Override
