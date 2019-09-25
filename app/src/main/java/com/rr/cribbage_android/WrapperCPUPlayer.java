@@ -1,5 +1,6 @@
 package com.rr.cribbage_android;
 
+import android.os.ConditionVariable;
 import com.cribbage.CPUPlayer;
 import com.cribbage.Card;
 import com.cribbage.Hand;
@@ -10,10 +11,15 @@ import java.util.List;
 public class WrapperCPUPlayer extends CPUPlayer {
     CPUPlayer player;
     HandLayout handLayout;
+    private ConditionVariable uiLock;
 
     public WrapperCPUPlayer(CPUPlayer player, HandLayout handLayout){
         this.player = player;
         this.handLayout = handLayout;
+    }
+
+    public void setUiLockVariable(ConditionVariable uiLock){
+        this.uiLock = uiLock;
     }
 
     @Override
@@ -27,7 +33,19 @@ public class WrapperCPUPlayer extends CPUPlayer {
             hand.add(pcv);
         }
         handLayout.post(new SendDiscardUpdateUI(hand));
-        return this.player.discard();
+        uiLock.block();
+        Card [] dis = this.player.discard();
+//        for(PlayingCardView pcv : hand){
+//            for(Card c : dis){
+//                if(pcv.getCard().getInt() == c.getInt()) pcv.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        pcv.performClick();
+//                    }
+//                });
+//            }
+//        }
+        return dis;
     }
 
     @Override

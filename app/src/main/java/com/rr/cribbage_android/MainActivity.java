@@ -5,6 +5,7 @@ import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.ConditionVariable;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.os.Bundle;
@@ -15,12 +16,13 @@ import java.util.Arrays;
 
 public class MainActivity extends Activity {
     private final String TAG = "Main activity";
-
+    ConditionVariable uiLock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        uiLock = new ConditionVariable();
 
         Window w = getWindow(); w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
@@ -40,30 +42,30 @@ public class MainActivity extends Activity {
 //            Log.d(TAG, p1.getScore() + " " + p2.getScore());
 //        }
 
-        RunGameRunnable rgr = new RunGameRunnable(game);
+        RunGameRunnable rgr = new RunGameRunnable(game, p1, p2);
         new Thread(rgr).start();
 
     }
 
+    public void openUiLock(View v){
+        uiLock.open();
+    }
+
     class RunGameRunnable implements Runnable{
         private Game game;
-        ConditionVariable discard;
-        RunGameRunnable(Game game){
+        RunGameRunnable(Game game, WrapperCPUPlayer p1, WrapperCPUPlayer p2){
             this.game = game;
-            discard = new ConditionVariable();
-
+            p1.setUiLockVariable(uiLock);
+            p2.setUiLockVariable(uiLock);
         }
 
         @Override
         public void run() {
             while(!this.game.isDone()){
                 this.game.step();
+                uiLock.close();
                 Log.d(TAG, Arrays.toString(this.game.getScore()));
             }
-        }
-
-        public void openDiscard(){
-            this.discard.open();
         }
     }
 

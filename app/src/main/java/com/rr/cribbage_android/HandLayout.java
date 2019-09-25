@@ -54,10 +54,12 @@ public class HandLayout extends ConstraintLayout {
 
     public void removeCard(PlayingCardView card){
         this.hand_list.remove(card);
+        this.removeView(card);
         this.applyHand();
     }
 
     public void addHand(List<PlayingCardView> hand){
+        this.removeAllViews();//for(PlayingCardView pcv : this.hand_list) this.removeView(pcv);
         this.hand_list = hand;
         applyHand();
     }

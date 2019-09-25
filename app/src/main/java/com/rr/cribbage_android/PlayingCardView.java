@@ -51,6 +51,10 @@ public class PlayingCardView extends AppCompatImageView {
         this.card = new Card(cardNum);
     }
 
+    public Card getCard(){
+        return this.card;
+    }
+
     public void showCardFace(boolean show){
         if(show){
             this.setImageResource(imageId);
