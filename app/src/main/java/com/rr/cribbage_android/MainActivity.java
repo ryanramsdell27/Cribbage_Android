@@ -16,13 +16,13 @@ import java.util.Arrays;
 
 public class MainActivity extends Activity {
     private final String TAG = "Main activity";
-    ConditionVariable uiLock;
+    ConditionVariable inputLock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        uiLock = new ConditionVariable();
+        inputLock = new ConditionVariable();
 
         Window w = getWindow(); w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
@@ -47,23 +47,23 @@ public class MainActivity extends Activity {
 
     }
 
-    public void openUiLock(View v){
-        uiLock.open();
+    public void openInputLock(View v){
+        inputLock.open();
     }
 
     class RunGameRunnable implements Runnable{
         private Game game;
         RunGameRunnable(Game game, WrapperCPUPlayer p1, WrapperCPUPlayer p2){
             this.game = game;
-            p1.setUiLockVariable(uiLock);
-            p2.setUiLockVariable(uiLock);
+            p1.setUiLockVariable(inputLock);
+            p2.setUiLockVariable(inputLock);
         }
 
         @Override
         public void run() {
             while(!this.game.isDone()){
                 this.game.step();
-                uiLock.close();
+                inputLock.close();
                 Log.d(TAG, Arrays.toString(this.game.getScore()));
             }
         }

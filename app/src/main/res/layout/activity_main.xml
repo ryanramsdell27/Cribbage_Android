@@ -94,8 +94,8 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline4"/>
 
     <Button
-            android:text="Button"
-            android:onClick="openUiLock"
+            android:text="Discard"
+            android:onClick="openInputLock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button"
