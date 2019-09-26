@@ -39,11 +39,6 @@ public class MainActivity extends Activity {
         //WrapperCPUPlayer p2 = new WrapperCPUPlayer(new CPUPlayerAVG(), handLayoutOpponent);
         UIInteractivePlayer p2 = new UIInteractivePlayer(handLayoutPlayer, discardPilePlayer);
         Game game = new Cribbage(p1, p2, 1);
-//        this.game.step();
-//        while(!this.game.isDone()) {
-//            this.game.step();
-//            Log.d(TAG, p1.getScore() + " " + p2.getScore());
-//        }
 
         RunGameRunnable rgr = new RunGameRunnable(game, p1, p2);
         new Thread(rgr).start();

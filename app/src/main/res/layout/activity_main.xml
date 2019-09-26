@@ -52,7 +52,7 @@
             android:layout_marginBottom="8dp"
             app:layout_constraintTop_toTopOf="@+id/guideline2"/>
 
-    <com.rr.cribbage_android.HandLayout
+    <com.rr.cribbage_android.DiscardPileLayout
             android:id="@+id/DiscardPilePlayer"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -62,9 +62,7 @@
             app:layout_constraintTop_toTopOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp">
-
-    </com.rr.cribbage_android.HandLayout>
+            android:layout_marginEnd="8dp"/>
 
     <com.rr.cribbage_android.HandLayout
             android:id="@+id/HandLayoutOpponent"
@@ -80,7 +78,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="0dp"/>
 
-    <com.rr.cribbage_android.HandLayout
+    <com.rr.cribbage_android.DiscardPileLayout
             android:id="@+id/DiscardPileOpponent"
             android:layout_width="0dp"
             android:layout_height="0dp"

@@ -22,16 +22,22 @@ public class UIInteractivePlayer extends UIPlayer {
     public Card[] discard() {
         List<Card> ccl_hand = this.getHand().getHand();
         ArrayList<PlayingCardView> hand = new ArrayList<>();
-        for(Card c:ccl_hand){
+        for (Card c : ccl_hand) {
             PlayingCardView pcv = new PlayingCardView(handLayout.getContext());
             pcv.setCard(c.getInt());
             pcv.showCardFace(true);
             hand.add(pcv);
         }
         handLayout.post(new SendDiscardUpdateUI(hand));
-        uiLock.block();
 
-        List<PlayingCardView> hand_list = this.discardLayout.getHandList();
+        List<PlayingCardView> hand_list = this.discardLayout.getHandList() ;
+        while (hand_list == null || hand_list.size() < 2){
+            uiLock.close();
+            uiLock.block();
+            hand_list = this.discardLayout.getHandList();
+        }
+
+
         Card [] dis = new Card[hand_list.size()];
         for(PlayingCardView pcv : hand_list){
             dis[hand_list.indexOf(pcv)] = pcv.getCard();
