@@ -10,19 +10,12 @@ import com.cribbage.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WrapperInteractivePlayer extends CPUPlayer {
+public class UIInteractivePlayer extends UIPlayer {
     private final String TAG = "WrapperInteractPlayer";
-    HandLayout handLayout;
-    HandLayout discardLayout;
-    private ConditionVariable uiLock;
 
-    public WrapperInteractivePlayer(HandLayout handLayout, HandLayout discardLayout){
+    public UIInteractivePlayer(HandLayout handLayout, HandLayout discardLayout){
+        super(handLayout, discardLayout);
         this.handLayout = handLayout;
-        this.discardLayout = discardLayout;
-    }
-
-    public void setUiLockVariable(ConditionVariable uiLock){
-        this.uiLock = uiLock;
     }
 
     @Override
@@ -60,28 +53,5 @@ public class WrapperInteractivePlayer extends CPUPlayer {
             }
         });
         return dis;
-    }
-
-    public void clearHands(){
-        this.handLayout.post(new Runnable(){
-            @Override
-            public void run() {
-                handLayout.removeAllCards();
-                discardLayout.removeAllCards();
-            }
-        });
-    }
-
-
-
-    class SendDiscardUpdateUI implements Runnable{
-        private List<PlayingCardView> hand;
-        public SendDiscardUpdateUI(List<PlayingCardView> hand){
-            this.hand = hand;
-        }
-        @Override
-        public void run() {
-            handLayout.addHand(hand);
-        }
     }
 }

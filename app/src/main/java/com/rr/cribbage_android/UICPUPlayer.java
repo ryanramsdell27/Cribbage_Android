@@ -9,21 +9,14 @@ import com.cribbage.Hand;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WrapperCPUPlayer extends CPUPlayer {
+public class UICPUPlayer extends UIPlayer {
     private final String TAG = "WrapperCPUPlayer";
     CPUPlayer player;
-    HandLayout handLayout;
-    HandLayout discardLayout;
-    private ConditionVariable uiLock;
 
-    public WrapperCPUPlayer(CPUPlayer player, HandLayout handLayout, HandLayout discardLayout){
+    public UICPUPlayer(CPUPlayer player, HandLayout handLayout, HandLayout discardLayout){
+        super(handLayout, discardLayout);
         this.player = player;
-        this.handLayout = handLayout;
-        this.discardLayout = discardLayout;
-    }
 
-    public void setUiLockVariable(ConditionVariable uiLock){
-        this.uiLock = uiLock;
     }
 
     @Override
@@ -53,29 +46,9 @@ public class WrapperCPUPlayer extends CPUPlayer {
                 }
             }
         });
-
-//        for(PlayingCardView pcv : hand){
-//            for(Card c : dis){
-//                if(pcv.getCard().getInt() == c.getInt()) pcv.post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        pcv.performClick();
-//                    }
-//                });
-//            }
-//        }
         return dis;
     }
 
-    public void clearHands(){
-        this.handLayout.post(new Runnable(){
-            @Override
-            public void run() {
-                handLayout.removeAllCards();
-                discardLayout.removeAllCards();
-            }
-        });
-    }
 
     @Override
     public Card peg(ArrayList<Card> peg_pile){
@@ -119,14 +92,4 @@ public class WrapperCPUPlayer extends CPUPlayer {
         this.player.setPeg();
     }
 
-    class SendDiscardUpdateUI implements Runnable{
-        private List<PlayingCardView> hand;
-        public SendDiscardUpdateUI(List<PlayingCardView> hand){
-            this.hand = hand;
-        }
-        @Override
-        public void run() {
-            handLayout.addHand(hand);
-        }
-    }
 }

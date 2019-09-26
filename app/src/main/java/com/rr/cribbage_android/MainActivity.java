@@ -1,8 +1,6 @@
 package com.rr.cribbage_android;
 
 import android.app.Activity;
-import android.nfc.Tag;
-import android.os.AsyncTask;
 import android.os.ConditionVariable;
 import android.util.Log;
 import android.view.View;
@@ -12,7 +10,6 @@ import android.os.Bundle;
 import android.widget.Toolbar;
 import com.cribbage.*;
 
-import java.sql.Wrapper;
 import java.util.Arrays;
 
 public class MainActivity extends Activity {
@@ -38,9 +35,9 @@ public class MainActivity extends Activity {
         HandLayout handLayoutPlayer = findViewById(R.id.HandLayoutPlayer);
         HandLayout discardPilePlayer = findViewById(R.id.DiscardPilePlayer);
 
-        WrapperCPUPlayer p1 = new WrapperCPUPlayer(new CPUPlayerAVG(), handLayoutOpponent, discardPileOpponent);
+        UICPUPlayer p1 = new UICPUPlayer(new CPUPlayerAVG(), handLayoutOpponent, discardPileOpponent);
         //WrapperCPUPlayer p2 = new WrapperCPUPlayer(new CPUPlayerAVG(), handLayoutOpponent);
-        WrapperInteractivePlayer p2 = new WrapperInteractivePlayer(handLayoutPlayer, discardPilePlayer);
+        UIInteractivePlayer p2 = new UIInteractivePlayer(handLayoutPlayer, discardPilePlayer);
         Game game = new Cribbage(p1, p2, 1);
 //        this.game.step();
 //        while(!this.game.isDone()) {
@@ -59,9 +56,9 @@ public class MainActivity extends Activity {
 
     class RunGameRunnable implements Runnable{
         private Game game;
-        private WrapperCPUPlayer p1;
-        private WrapperInteractivePlayer p2;
-        RunGameRunnable(Game game, WrapperCPUPlayer p1, WrapperInteractivePlayer p2){
+        private UIPlayer p1;
+        private UIPlayer p2;
+        RunGameRunnable(Game game, UIPlayer p1, UIPlayer p2){
             this.game = game;
             p1.setUiLockVariable(inputLock);
             p2.setUiLockVariable(inputLock);

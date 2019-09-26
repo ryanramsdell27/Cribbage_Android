@@ -82,7 +82,7 @@ public class Hand implements Iterable<Card> {
      * Removes a card from this hand
      * @param c The Card object to remove
      */
-    void remove(Card c){
+    public void remove(Card c){
         this.hand.remove(c);
     }
 
