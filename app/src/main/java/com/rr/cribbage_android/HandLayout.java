@@ -58,6 +58,11 @@ public class HandLayout extends ConstraintLayout {
         this.applyHand();
     }
 
+    public void removeAllCards(){
+        this.hand_list = null;
+        this.applyHand();
+    }
+
     public void addHand(List<PlayingCardView> hand){
         this.removeAllViews();//for(PlayingCardView pcv : this.hand_list) this.removeView(pcv);
         this.hand_list = hand;
@@ -66,7 +71,7 @@ public class HandLayout extends ConstraintLayout {
 
     public void applyHand(){
         if(this.hand_list == null){
-            Log.e(TAG, "Hand array is null");
+            this.removeAllViews();
             return;
         }
 
@@ -108,6 +113,10 @@ public class HandLayout extends ConstraintLayout {
             this.addView(pcv);
         }
         set.applyTo(this);
+    }
+
+    public List<PlayingCardView> getHandList() {
+        return this.hand_list;
     }
 
     static class CardClickListener implements OnClickListener {

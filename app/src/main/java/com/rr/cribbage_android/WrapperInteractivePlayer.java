@@ -5,19 +5,18 @@ import android.util.Log;
 import com.cribbage.CPUPlayer;
 import com.cribbage.Card;
 import com.cribbage.Hand;
+import com.cribbage.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WrapperCPUPlayer extends CPUPlayer {
-    private final String TAG = "WrapperCPUPlayer";
-    CPUPlayer player;
+public class WrapperInteractivePlayer extends CPUPlayer {
+    private final String TAG = "WrapperInteractPlayer";
     HandLayout handLayout;
     HandLayout discardLayout;
     private ConditionVariable uiLock;
 
-    public WrapperCPUPlayer(CPUPlayer player, HandLayout handLayout, HandLayout discardLayout){
-        this.player = player;
+    public WrapperInteractivePlayer(HandLayout handLayout, HandLayout discardLayout){
         this.handLayout = handLayout;
         this.discardLayout = discardLayout;
     }
@@ -28,7 +27,7 @@ public class WrapperCPUPlayer extends CPUPlayer {
 
     @Override
     public Card[] discard() {
-        List<Card> ccl_hand = player.getHand().getHand();
+        List<Card> ccl_hand = this.getHand().getHand();
         ArrayList<PlayingCardView> hand = new ArrayList<>();
         for(Card c:ccl_hand){
             PlayingCardView pcv = new PlayingCardView(handLayout.getContext());
@@ -37,7 +36,14 @@ public class WrapperCPUPlayer extends CPUPlayer {
             hand.add(pcv);
         }
         handLayout.post(new SendDiscardUpdateUI(hand));
-        Card [] dis = this.player.discard();
+        uiLock.block();
+
+        List<PlayingCardView> hand_list = this.discardLayout.getHandList();
+        Card [] dis = new Card[hand_list.size()];
+        for(PlayingCardView pcv : hand_list){
+            dis[hand_list.indexOf(pcv)] = pcv.getCard();
+        }
+
         final ArrayList<PlayingCardView> discardPile = new ArrayList<>(2);
         for(PlayingCardView pcv: hand){
             for(Card c: dis){
@@ -53,17 +59,6 @@ public class WrapperCPUPlayer extends CPUPlayer {
                 }
             }
         });
-
-//        for(PlayingCardView pcv : hand){
-//            for(Card c : dis){
-//                if(pcv.getCard().getInt() == c.getInt()) pcv.post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        pcv.performClick();
-//                    }
-//                });
-//            }
-//        }
         return dis;
     }
 
@@ -77,47 +72,7 @@ public class WrapperCPUPlayer extends CPUPlayer {
         });
     }
 
-    @Override
-    public Card peg(ArrayList<Card> peg_pile){
-        return this.player.peg(peg_pile);
-    }
 
-    @Override
-    public int getScore(){
-        return this.player.getScore();
-    }
-    @Override
-    public void setScore(int score){
-        this.player.setScore(score);
-    }
-    @Override
-    public Hand getHand(){
-        return this.player.getHand();
-    }
-    @Override
-    public Hand getPegHand(){
-        return this.player.getPegHand();
-    }
-    @Override
-    public boolean canPeg(ArrayList<Card> peg_pile){
-        return this.player.canPeg(peg_pile);
-    }
-    @Override
-    public void increaseScore(int score){
-        this.player.increaseScore(score);
-    }
-    @Override
-    public String toString() {
-        return this.player.toString();
-    }
-    @Override
-    public void setDealer(boolean b){
-        this.player.setDealer(b);
-    }
-    @Override
-    public void setPeg(){
-        this.player.setPeg();
-    }
 
     class SendDiscardUpdateUI implements Runnable{
         private List<PlayingCardView> hand;

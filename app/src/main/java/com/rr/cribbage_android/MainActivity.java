@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.widget.Toolbar;
 import com.cribbage.*;
 
+import java.sql.Wrapper;
 import java.util.Arrays;
 
 public class MainActivity extends Activity {
@@ -31,11 +32,16 @@ public class MainActivity extends Activity {
         setActionBar(toolbar);
 
 //        CPUPlayerAVG p1 = new CPUPlayerAVG();
-        HandLayout hl1 = findViewById(R.id.HandLayoutPlayer);
-        HandLayout hl2 = findViewById(R.id.HandLayoutOpponent);
-        WrapperCPUPlayer p1 = new WrapperCPUPlayer(new CPUPlayerAVG(), hl1);
-        WrapperCPUPlayer p2 = new WrapperCPUPlayer(new CPUPlayerAVG(), hl2);
-        Game game = new Cribbage(p1, p2, 0);
+        HandLayout handLayoutOpponent = findViewById(R.id.HandLayoutOpponent);
+        HandLayout discardPileOpponent = findViewById(R.id.DiscardPileOpponent);
+
+        HandLayout handLayoutPlayer = findViewById(R.id.HandLayoutPlayer);
+        HandLayout discardPilePlayer = findViewById(R.id.DiscardPilePlayer);
+
+        WrapperCPUPlayer p1 = new WrapperCPUPlayer(new CPUPlayerAVG(), handLayoutOpponent, discardPileOpponent);
+        //WrapperCPUPlayer p2 = new WrapperCPUPlayer(new CPUPlayerAVG(), handLayoutOpponent);
+        WrapperInteractivePlayer p2 = new WrapperInteractivePlayer(handLayoutPlayer, discardPilePlayer);
+        Game game = new Cribbage(p1, p2, 1);
 //        this.game.step();
 //        while(!this.game.isDone()) {
 //            this.game.step();
@@ -53,15 +59,22 @@ public class MainActivity extends Activity {
 
     class RunGameRunnable implements Runnable{
         private Game game;
-        RunGameRunnable(Game game, WrapperCPUPlayer p1, WrapperCPUPlayer p2){
+        private WrapperCPUPlayer p1;
+        private WrapperInteractivePlayer p2;
+        RunGameRunnable(Game game, WrapperCPUPlayer p1, WrapperInteractivePlayer p2){
             this.game = game;
             p1.setUiLockVariable(inputLock);
             p2.setUiLockVariable(inputLock);
+            this.p1 = p1;
+            this.p2 = p2;
         }
 
         @Override
         public void run() {
             while(!this.game.isDone()){
+                p1.clearHands();
+                p2.clearHands();
+
                 this.game.step();
                 inputLock.close();
                 Log.d(TAG, Arrays.toString(this.game.getScore()));
