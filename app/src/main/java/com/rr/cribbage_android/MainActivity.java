@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
         UICPUPlayer p1 = new UICPUPlayer(new CPUPlayerAVG(), handLayoutOpponent, discardPileOpponent);
         //WrapperCPUPlayer p2 = new WrapperCPUPlayer(new CPUPlayerAVG(), handLayoutOpponent);
         UIInteractivePlayer p2 = new UIInteractivePlayer(handLayoutPlayer, discardPilePlayer);
-        Game game = new Cribbage(p1, p2, 1);
+        Cribbage game = new Cribbage(p1, p2, 1);
 
         RunGameRunnable rgr = new RunGameRunnable(game, p1, p2);
         new Thread(rgr).start();
@@ -50,10 +50,10 @@ public class MainActivity extends Activity {
     }
 
     class RunGameRunnable implements Runnable{
-        private Game game;
+        private Cribbage game;
         private UIPlayer p1;
         private UIPlayer p2;
-        RunGameRunnable(Game game, UIPlayer p1, UIPlayer p2){
+        RunGameRunnable(Cribbage game, UIPlayer p1, UIPlayer p2){
             this.game = game;
             p1.setUiLockVariable(inputLock);
             p2.setUiLockVariable(inputLock);
@@ -67,7 +67,10 @@ public class MainActivity extends Activity {
                 p1.clearHands();
                 p2.clearHands();
 
-                this.game.step();
+                this.game.dealAndDiscard();
+                this.game.peg();
+                this.game.scorePlayers();
+
                 inputLock.close();
                 Log.d(TAG, Arrays.toString(this.game.getScore()));
             }

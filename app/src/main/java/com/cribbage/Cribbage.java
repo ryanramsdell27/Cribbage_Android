@@ -32,30 +32,35 @@ public class Cribbage implements Game {
     /**
      * Steps through one hand of this game, starting with the deal,
      * then discarding, pegging, and finally scoring
+     * @return true if done, false if we can step agains
      */
-    public void step(){
-        deck.shuffle();
-        Card starter = deck.deal(1)[0];
-        if(starter.rank == 11) this.players[dealer].increaseScore(2);
-        if(isDone()) return;
+    public boolean step(){
+        if (dealAndDiscard()) return true;
+        if (peg()) return true;
+        if(scorePlayers()) return true;
+        return false;
+        //        for(Player p:this.players) System.out.printf("%s score is %d\n", p.toString(), p.score); // TESTING
 
-        /* Deal and discard, also set up the crib */
-        this.crib.clear();
-        for(Player p : this.players){
-            Hand hand = p.getHand();
-            hand.clear();
-            hand.add(deck.deal(6));
-//            System.out.print(p.toString() + " --> "); // TESTING
-            crib.add(p.discard());
-            p.setPeg();
-            hand.add(starter);
-            hand.setStarter(starter);
-//            System.out.println(p.toString() + " " + p.hand.scoreHand()); // TESTING
+    }
+
+    public boolean scorePlayers() {
+        /* Score hands and crib */
+        for(int i = 0; i < this.players.length; i++){
+            Player cur_play = this.players[(this.dealer+i+1)%this.players.length];
+            cur_play.increaseScore(cur_play.getHand().scoreHand());
+            if(isDone()) return true;
         }
-        if(this.players.length == 3) this.crib.add(this.deck.deal(1));
-        this.crib.add(starter);
-        this.crib.setStarter(starter);
+        this.players[this.dealer].increaseScore(this.crib.scoreHand());
+        if(isDone()) return true ;
 
+        /* Set up next deal */
+        this.players[dealer].setDealer(false);
+        this.dealer = (this.dealer+1)%this.players.length;
+        this.players[dealer].setDealer(true);
+        return false;
+    }
+
+    public boolean peg() {
         /* Pegging */
         boolean can_peg = true;
         int pegger = (this.dealer+1)%this.players.length;
@@ -91,26 +96,35 @@ public class Cribbage implements Game {
             }
 
             can_peg = this.canPeg(peg_pile);
-            if(isDone()) return;
+            if(isDone()) return true;
             pegger = (pegger+1) % this.players.length;
         }
+        return false;
+    }
 
-        /* Score hands and crib */
-        for(int i = 0; i < this.players.length; i++){
-            Player cur_play = this.players[(this.dealer+i+1)%this.players.length];
-            cur_play.increaseScore(cur_play.getHand().scoreHand());
-            if(isDone()) return;
+    public boolean dealAndDiscard() {
+        deck.shuffle();
+        Card starter = deck.deal(1)[0];
+        if(starter.rank == 11) this.players[dealer].increaseScore(2);
+        if(isDone()) return true;
+
+        /* Deal and discard, also set up the crib */
+        this.crib.clear();
+        for(Player p : this.players){
+            Hand hand = p.getHand();
+            hand.clear();
+            hand.add(deck.deal(6));
+//            System.out.print(p.toString() + " --> "); // TESTING
+            crib.add(p.discard());
+            p.setPeg();
+            hand.add(starter);
+            hand.setStarter(starter);
+//            System.out.println(p.toString() + " " + p.hand.scoreHand()); // TESTING
         }
-        this.players[this.dealer].increaseScore(this.crib.scoreHand());
-        if(isDone()) return;
-
-        /* Set up next deal */
-        this.players[dealer].setDealer(false);
-        this.dealer = (this.dealer+1)%this.players.length;
-        this.players[dealer].setDealer(true);
-
-//        for(Player p:this.players) System.out.printf("%s score is %d\n", p.toString(), p.score); // TESTING
-
+        if(this.players.length == 3) this.crib.add(this.deck.deal(1));
+        this.crib.add(starter);
+        this.crib.setStarter(starter);
+        return false;
     }
 
     boolean canPeg(ArrayList<Card> peg_pile){

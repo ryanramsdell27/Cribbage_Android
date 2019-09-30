@@ -11,8 +11,9 @@ public interface Game {
 
     /**
      * Steps a single round/hand in this game
+     * @return true if done, false if can continue
      */
-    void step();
+    boolean step();
 
     /**
      * Determines if this game has finished
