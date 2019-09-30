@@ -40,6 +40,7 @@ public class Cribbage implements Game {
         if(isDone()) return;
 
         /* Deal and discard, also set up the crib */
+        this.crib.clear();
         for(Player p : this.players){
             Hand hand = p.getHand();
             hand.clear();
@@ -51,7 +52,6 @@ public class Cribbage implements Game {
             hand.setStarter(starter);
 //            System.out.println(p.toString() + " " + p.hand.scoreHand()); // TESTING
         }
-        this.crib.clear();
         if(this.players.length == 3) this.crib.add(this.deck.deal(1));
         this.crib.add(starter);
         this.crib.setStarter(starter);
