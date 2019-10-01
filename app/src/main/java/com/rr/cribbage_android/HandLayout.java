@@ -46,10 +46,20 @@ public class HandLayout extends ConstraintLayout {
         if(this.destination == 0) this.destination = R.id.DiscardPilePlayer;
     }
 
+    public boolean canAcceptCard(PlayingCardView pcv){
+        return true;
+    }
+
     public void addCard(PlayingCardView card){
         if(this.hand_list == null) this.hand_list = new ArrayList<>();
         this.hand_list.add(card);
         this.applyHand();
+    }
+
+    public void addHand(List<PlayingCardView> hand){
+        this.removeAllViews();//for(PlayingCardView pcv : this.hand_list) this.removeView(pcv);
+        this.hand_list = hand;
+        applyHand();
     }
 
     public void removeCard(PlayingCardView card){
@@ -61,16 +71,6 @@ public class HandLayout extends ConstraintLayout {
     public void removeAllCards(){
         this.hand_list = null;
         this.applyHand();
-    }
-
-    public void addHand(List<PlayingCardView> hand){
-        this.removeAllViews();//for(PlayingCardView pcv : this.hand_list) this.removeView(pcv);
-        this.hand_list = hand;
-        applyHand();
-    }
-
-    public List<PlayingCardView> getHand_list(){
-        return this.hand_list;
     }
 
     public void applyHand(){
@@ -133,10 +133,12 @@ public class HandLayout extends ConstraintLayout {
         }
         @Override
         public void onClick(View v) {
-            Log.d("Card click listener", this.source.getId() + "-->" + this.destination.getId());
+//            Log.d("Card click listener", this.source.getId() + "-->" + this.destination.getId());
             PlayingCardView pcv = (PlayingCardView)v;
+            if(!this.destination.canAcceptCard(pcv)) return;
+
             TransitionManager.beginDelayedTransition((ViewGroup) v.getRootView());
-            pcv.toggleFaceUp();
+//            pcv.toggleFaceUp();
             this.source.removeCard(pcv);
             this.destination.addCard(pcv);
             HandLayout tmp = this.source;

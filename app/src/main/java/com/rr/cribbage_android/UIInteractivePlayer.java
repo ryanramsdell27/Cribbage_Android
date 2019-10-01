@@ -15,7 +15,6 @@ public class UIInteractivePlayer extends UIPlayer {
 
     public UIInteractivePlayer(HandLayout handLayout, HandLayout discardLayout){
         super(handLayout, discardLayout);
-        this.handLayout = handLayout;
     }
 
     @Override
@@ -46,7 +45,6 @@ public class UIInteractivePlayer extends UIPlayer {
         final ArrayList<PlayingCardView> discardPile = new ArrayList<>(2);
         for(PlayingCardView pcv: hand){
             for(Card c: dis){
-                Log.d(TAG, pcv.getCard().toString() + " " + c.toString());
                 if(pcv.getCard().getInt() == c.getInt()) discardPile.add(pcv);
             }
         }
@@ -59,5 +57,26 @@ public class UIInteractivePlayer extends UIPlayer {
             }
         });
         return dis;
+    }
+
+    @Override
+    public Card peg(ArrayList<Card> peg_pile){
+        int total = 0;
+        for(Card c:peg_pile){
+            total += c.getValue();
+        }
+        Log.d(TAG, "(player) total is " + total);
+        for(PlayingCardView pcv:this.handLayout.getHandList()){
+            pcv.setPeggable(pcv.getCard().getValue() + total <= 31);
+        }
+
+        // TODO make this work with a condition variable rather than a spin lock
+        uiLock.close();
+        uiLock.block();
+//        while(this.discardLayout.getHandList() == null || this.discardLayout.getHandList().size() != 1){
+//
+//        }
+        PlayingCardView pcv = this.discardLayout.getHandList().get(0);
+        return pcv.getCard();
     }
 }

@@ -1,6 +1,7 @@
 package com.rr.cribbage_android;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.ConditionVariable;
 import android.util.Log;
 import android.view.View;
@@ -40,7 +41,7 @@ public class MainActivity extends Activity {
         UIInteractivePlayer p2 = new UIInteractivePlayer(handLayoutPlayer, discardPilePlayer);
         Cribbage game = new Cribbage(p1, p2, 1);
 
-        RunGameRunnable rgr = new RunGameRunnable(game, p1, p2);
+        RunGameRunnable rgr = new RunGameRunnable(game, p1, p2, this);
         new Thread(rgr).start();
 
     }
@@ -53,12 +54,23 @@ public class MainActivity extends Activity {
         private Cribbage game;
         private UIPlayer p1;
         private UIPlayer p2;
-        RunGameRunnable(Cribbage game, UIPlayer p1, UIPlayer p2){
+        private Activity mainActivity;
+        private HandLayout handLayoutPlayer, handLayoutOpponent;
+        private DiscardPileLayout discardPilePlayer, discardPileOpponent;
+
+        RunGameRunnable(Cribbage game, UIPlayer p1, UIPlayer p2, Activity mainActivity){
             this.game = game;
             p1.setUiLockVariable(inputLock);
             p2.setUiLockVariable(inputLock);
             this.p1 = p1;
             this.p2 = p2;
+            this.mainActivity = mainActivity;
+            this.handLayoutPlayer    = mainActivity.findViewById(R.id.HandLayoutPlayer);
+            this.handLayoutOpponent  = mainActivity.findViewById(R.id.HandLayoutOpponent);
+            this.discardPilePlayer   = mainActivity.findViewById(R.id.DiscardPilePlayer);
+            this.discardPileOpponent = mainActivity.findViewById(R.id.DiscardPileOpponent);
+
+            this.discardPilePlayer.setInputLock(inputLock);
         }
 
         @Override
@@ -68,10 +80,29 @@ public class MainActivity extends Activity {
                 p2.clearHands();
 
                 this.game.dealAndDiscard();
-                this.game.peg();
-                this.game.scorePlayers();
+                // Move discards to crib pile
+                // TODO implement this
+                this.handLayoutOpponent.post(new Runnable(){
+                    @Override
+                    public void run() {
+                        discardPileOpponent.removeAllCards();
+                        discardPilePlayer.removeAllCards();
+                    }
+                });
+
 
                 inputLock.close();
+                this.discardPileOpponent.setStackStyle(DiscardPileLayout.StackStyle.PEG);
+                this.discardPilePlayer.setStackStyle(DiscardPileLayout.StackStyle.PEG);
+                this.game.peg();
+                // return pegging card to hands
+                // TODO implement this
+                // switch discard piles back to discard style
+                this.discardPileOpponent.setStackStyle(DiscardPileLayout.StackStyle.DISCARD);
+                this.discardPilePlayer.setStackStyle(DiscardPileLayout.StackStyle.DISCARD);
+                inputLock.block();
+                this.game.scorePlayers();
+
                 Log.d(TAG, Arrays.toString(this.game.getScore()));
             }
         }

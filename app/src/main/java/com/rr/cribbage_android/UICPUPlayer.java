@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UICPUPlayer extends UIPlayer {
-    private final String TAG = "WrapperCPUPlayer";
+    private final String TAG = "UICPUPlayer";
     CPUPlayer player;
 
     public UICPUPlayer(CPUPlayer player, HandLayout handLayout, HandLayout discardLayout){
@@ -34,7 +34,6 @@ public class UICPUPlayer extends UIPlayer {
         final ArrayList<PlayingCardView> discardPile = new ArrayList<>(2);
         for(PlayingCardView pcv: hand){
             for(Card c: dis){
-                Log.d(TAG, pcv.getCard().toString() + " " + c.toString());
                 if(pcv.getCard().getInt() == c.getInt()) discardPile.add(pcv);
             }
         }
@@ -52,6 +51,11 @@ public class UICPUPlayer extends UIPlayer {
 
     @Override
     public Card peg(ArrayList<Card> peg_pile){
+        int total = 0;
+        for(Card c:peg_pile){
+            total += c.getValue();
+        }
+        Log.d(TAG, "total is " + total);
         return this.player.peg(peg_pile);
     }
 
