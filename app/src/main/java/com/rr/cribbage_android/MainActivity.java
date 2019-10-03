@@ -25,10 +25,6 @@ public class MainActivity extends Activity {
 
         Window w = getWindow(); w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setActionBar(toolbar);
-
 //        CPUPlayerAVG p1 = new CPUPlayerAVG();
         HandLayout handLayoutOpponent = findViewById(R.id.HandLayoutOpponent);
         HandLayout discardPileOpponent = findViewById(R.id.DiscardPileOpponent);
