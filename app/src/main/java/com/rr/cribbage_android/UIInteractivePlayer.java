@@ -73,7 +73,6 @@ public class UIInteractivePlayer extends UIPlayer {
             pcv.setPeggable(pcv.getCard().getValue() + total <= 31);
         }
 
-        // TODO make this work with a condition variable rather than a spin lock
         uiLock.close();
         uiLock.block();
 

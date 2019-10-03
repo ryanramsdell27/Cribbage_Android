@@ -145,7 +145,7 @@ public class HandLayout extends ConstraintLayout {
             PlayingCardView pcv = (PlayingCardView)v;
             if(!this.destination.canAcceptCard(pcv)) return;
 
-            TransitionManager.beginDelayedTransition((ViewGroup) v.getRootView());
+//            TransitionManager.beginDelayedTransition((ViewGroup) v.getRootView());
 //            pcv.toggleFaceUp();
             this.source.removeCard(pcv);
             this.destination.addCard(pcv);

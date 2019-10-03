@@ -56,7 +56,22 @@ public class UICPUPlayer extends UIPlayer {
             total += c.getValue();
         }
         Log.d(TAG, "total is " + total);
-        return this.player.peg(peg_pile);
+        Card pegged = this.player.peg(peg_pile);
+        PlayingCardView peggedView = null;
+        for(PlayingCardView pcv : this.handLayout.getHandList()){
+            if(pcv.getCard() == pegged){
+                peggedView = pcv;
+            }
+        }
+        if(peggedView == null) return pegged;
+        final PlayingCardView finalPeggedView = peggedView;
+        this.handLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                finalPeggedView.performClick();
+            }
+        });
+        return pegged;
     }
 
     @Override
