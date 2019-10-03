@@ -49,7 +49,8 @@ public class PlayingCardView extends AppCompatImageView {
     }
 
     public void setCard(Card card){
-        this.imageId = cardIds[card.getInt()];
+        int index = card.getRank()-1 + 13*card.getSuit();
+        this.imageId = cardIds[index];
         this.card = card;
     }
 
