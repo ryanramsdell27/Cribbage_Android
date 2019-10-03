@@ -25,7 +25,7 @@ public class UICPUPlayer extends UIPlayer {
         ArrayList<PlayingCardView> hand = new ArrayList<>();
         for(Card c:ccl_hand){
             PlayingCardView pcv = new PlayingCardView(handLayout.getContext());
-            pcv.setCard(c.getInt());
+            pcv.setCard(c);
             pcv.showCardFace(true);
             hand.add(pcv);
         }

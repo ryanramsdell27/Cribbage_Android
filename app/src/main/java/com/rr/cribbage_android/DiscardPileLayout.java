@@ -40,7 +40,9 @@ public class DiscardPileLayout extends HandLayout{
         switch(this.style){
             case PEG:
                 if( this.getId() == R.id.DiscardPileOpponent) return true;
-                return pcv.getPeggable();
+                boolean ret = pcv.getPeggable();
+                if(ret) this.setLastAdded(pcv);
+                return ret;
 
             case DISCARD:
                 if(this.getHandList() == null) return true;

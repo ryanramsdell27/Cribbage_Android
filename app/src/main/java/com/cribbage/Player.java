@@ -11,16 +11,27 @@ public abstract class Player {
     private Hand hand;
     private Hand peg;
 
+    /**
+     * Determine which card to play on peg
+     * Side effect is that the card is removed from the peg Hand
+     * @param peg_pile All the cards pegged in this round from all players
+     * @return The card to be pegged from the player's hand, null if nothing can be played
+     */
     public abstract Card peg(ArrayList<Card> peg_pile);
     public abstract Card [] discard();
 
-    Card[] discard(Card [] cards){
+    /**
+     * Remove the selected cards from the hand
+     * @param cards The cards to remove
+     * @return The removed cards
+     */
+    protected Card[] discard(Card[] cards){
         Card [] ret = new Card[cards.length];
         int index = 0;
         this.dealer = false;
         for(Card c :cards){
             ret[index] = c;
-            this.hand.remove(c);
+            this.getHand().remove(c);
         }
         return ret;
     }
@@ -59,11 +70,11 @@ public abstract class Player {
     public boolean canPeg(ArrayList<Card> peg_pile){
         int sum = 0;
         for(Card c:peg_pile){
-            sum += c.value;
+            sum += c.getValue();
         }
         boolean ret = false;
-        for(Card c: this.peg){
-            ret |= sum + c.value <= 31;
+        for(Card c: this.getPegHand()){
+            ret |= sum + c.getValue() <= 31;
         }
         return ret;
     }

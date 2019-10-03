@@ -23,7 +23,7 @@ public class UIInteractivePlayer extends UIPlayer {
         ArrayList<PlayingCardView> hand = new ArrayList<>();
         for (Card c : ccl_hand) {
             PlayingCardView pcv = new PlayingCardView(handLayout.getContext());
-            pcv.setCard(c.getInt());
+            pcv.setCard(c);
             pcv.showCardFace(true);
             hand.add(pcv);
         }
@@ -56,11 +56,13 @@ public class UIInteractivePlayer extends UIPlayer {
                 }
             }
         });
+        super.discard(dis);
         return dis;
     }
 
     @Override
     public Card peg(ArrayList<Card> peg_pile){
+        if(!this.canPeg(peg_pile)) return null;
         int total = 0;
         for(Card c:peg_pile){
             total += c.getValue();
@@ -73,10 +75,10 @@ public class UIInteractivePlayer extends UIPlayer {
         // TODO make this work with a condition variable rather than a spin lock
         uiLock.close();
         uiLock.block();
-//        while(this.discardLayout.getHandList() == null || this.discardLayout.getHandList().size() != 1){
-//
-//        }
-        PlayingCardView pcv = this.discardLayout.getHandList().get(0);
+
+        PlayingCardView pcv = this.discardLayout.getLastAdded();
+        pcv.setEnabled(false);
+        this.getPegHand().remove(pcv.getCard());
         return pcv.getCard();
     }
 }

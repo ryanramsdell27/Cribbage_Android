@@ -48,9 +48,9 @@ public class PlayingCardView extends AppCompatImageView {
         this.showCardFace(this.faceUp);
     }
 
-    public void setCard(int cardNum){
-        this.imageId = cardIds[cardNum];
-        this.card = new Card(cardNum);
+    public void setCard(Card card){
+        this.imageId = cardIds[card.getInt()];
+        this.card = card;
     }
 
     public void setPeggable(boolean peggable){

@@ -17,6 +17,7 @@ public class HandLayout extends ConstraintLayout {
     private String TAG = "Hand Layout";
 
     private List<PlayingCardView> hand_list;
+    private PlayingCardView lastAdded;
     private int destination = 0;
 
     public HandLayout(Context context) {
@@ -121,6 +122,13 @@ public class HandLayout extends ConstraintLayout {
 
     public List<PlayingCardView> getHandList() {
         return this.hand_list;
+    }
+
+    public void setLastAdded(PlayingCardView pcv){
+        this.lastAdded = pcv;
+    }
+    public PlayingCardView getLastAdded(){
+        return this.lastAdded;
     }
 
     static class CardClickListener implements OnClickListener {
