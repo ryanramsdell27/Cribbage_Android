@@ -2,6 +2,7 @@ package com.rr.cribbage_android;
 
 import android.os.ConditionVariable;
 import android.util.Log;
+import android.widget.TextView;
 import com.cribbage.CPUPlayer;
 import com.cribbage.Card;
 import com.cribbage.Hand;
@@ -13,10 +14,9 @@ public class UICPUPlayer extends UIPlayer {
     private final String TAG = "UICPUPlayer";
     CPUPlayer player;
 
-    public UICPUPlayer(CPUPlayer player, HandLayout handLayout, HandLayout discardLayout){
-        super(handLayout, discardLayout);
+    public UICPUPlayer(CPUPlayer player, HandLayout handLayout, HandLayout discardLayout, TextView scoreView){
+        super(handLayout, discardLayout, scoreView);
         this.player = player;
-
     }
 
     @Override
@@ -82,6 +82,7 @@ public class UICPUPlayer extends UIPlayer {
     @Override
     public void increaseScore(int score){
         this.player.increaseScore(score);
+        super.increaseScore(score);
     }
     @Override
     public String toString() {

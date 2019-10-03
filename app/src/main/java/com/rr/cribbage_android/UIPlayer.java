@@ -1,6 +1,7 @@
 package com.rr.cribbage_android;
 
 import android.os.ConditionVariable;
+import android.widget.TextView;
 import com.cribbage.CPUPlayer;
 import com.cribbage.Card;
 import com.cribbage.Player;
@@ -11,11 +12,13 @@ import java.util.List;
 public abstract class UIPlayer extends Player {
     HandLayout handLayout;
     HandLayout discardLayout;
+    TextView scoreView;
     ConditionVariable uiLock;
 
-    public UIPlayer(HandLayout handLayout, HandLayout discardLayout){
+    public UIPlayer(HandLayout handLayout, HandLayout discardLayout, TextView scoreView){
         this.handLayout = handLayout;
         this.discardLayout = discardLayout;
+        this.scoreView = scoreView;
     }
 
     public void setUiLockVariable(ConditionVariable uiLock){
@@ -46,6 +49,13 @@ public abstract class UIPlayer extends Player {
             }
         }
         return null;
+    }
+
+    @Override
+    public void increaseScore(int score){
+        super.increaseScore(score);
+        final String scoreText = String.valueOf(this.getScore());
+        this.scoreView.setText(scoreText);
     }
 
 

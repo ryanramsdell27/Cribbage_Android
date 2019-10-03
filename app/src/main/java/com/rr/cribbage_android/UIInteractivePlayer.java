@@ -2,6 +2,7 @@ package com.rr.cribbage_android;
 
 import android.os.ConditionVariable;
 import android.util.Log;
+import android.widget.TextView;
 import com.cribbage.CPUPlayer;
 import com.cribbage.Card;
 import com.cribbage.Hand;
@@ -13,8 +14,8 @@ import java.util.List;
 public class UIInteractivePlayer extends UIPlayer {
     private final String TAG = "WrapperInteractPlayer";
 
-    public UIInteractivePlayer(HandLayout handLayout, HandLayout discardLayout){
-        super(handLayout, discardLayout);
+    public UIInteractivePlayer(HandLayout handLayout, HandLayout discardLayout, TextView scoreView){
+        super(handLayout, discardLayout, scoreView);
     }
 
     @Override

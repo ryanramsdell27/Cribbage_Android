@@ -20,14 +20,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/guideline"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.4"/>
+            app:layout_constraintGuide_percent="0.43"/>
 
     <androidx.constraintlayout.widget.Guideline
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/guideline2"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.65"/>
+            app:layout_constraintGuide_percent="0.62"/>
 
     <androidx.constraintlayout.widget.Guideline
             android:layout_width="wrap_content"
@@ -58,8 +58,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/guideline7"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_margin="8dp"
             app:layout_constraintTop_toTopOf="@+id/guideline2"/>
 
     <com.rr.cribbage_android.DiscardPileLayout
@@ -76,9 +75,9 @@
 
     <com.rr.cribbage_android.HandLayout
             android:id="@+id/HandLayoutOpponent"
-            android:layout_width="416dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
+            android:layout_margin="8dp"
             app:Destination="@id/DiscardPileOpponent"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
@@ -100,7 +99,7 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline4"/>
 
     <Button
-            android:text="Discard"
+            android:text="UI-Lock"
             android:onClick="openInputLock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -113,6 +112,39 @@
             app:layout_constraintTop_toTopOf="@+id/guideline"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline2"/>
+
+    <TextView
+            android:text="Crib Pointer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/CribPointer"
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/guideline6"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"/>
+
+    <TextView
+            android:text="Opponent: Score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ScoreOpponent"
+            android:layout_margin="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/guideline6"/>
+
+    <TextView
+            android:text="Player: Score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ScorePlayer"
+            android:layout_margin="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/guideline6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline5"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

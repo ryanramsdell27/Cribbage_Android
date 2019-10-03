@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fitsSystemWindows">true</item>
         <item name="android:textColorPrimary">@color/text</item>
+        <item name="android:textColor">@color/text</item>
 
     </style>
 

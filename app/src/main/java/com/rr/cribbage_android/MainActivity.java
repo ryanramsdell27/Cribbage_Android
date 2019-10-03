@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toolbar;
 import com.cribbage.*;
 
@@ -28,13 +29,15 @@ public class MainActivity extends Activity {
 //        CPUPlayerAVG p1 = new CPUPlayerAVG();
         HandLayout handLayoutOpponent = findViewById(R.id.HandLayoutOpponent);
         HandLayout discardPileOpponent = findViewById(R.id.DiscardPileOpponent);
+        TextView scoreViewOpponent = findViewById(R.id.ScoreOpponent);
 
         HandLayout handLayoutPlayer = findViewById(R.id.HandLayoutPlayer);
         HandLayout discardPilePlayer = findViewById(R.id.DiscardPilePlayer);
+        TextView scoreViewPlayer = findViewById(R.id.ScorePlayer);
 
-        UICPUPlayer p1 = new UICPUPlayer(new CPUPlayerAVG(), handLayoutOpponent, discardPileOpponent);
+        UICPUPlayer p1 = new UICPUPlayer(new CPUPlayerAVG(), handLayoutOpponent, discardPileOpponent, scoreViewOpponent);
         //WrapperCPUPlayer p2 = new WrapperCPUPlayer(new CPUPlayerAVG(), handLayoutOpponent);
-        UIInteractivePlayer p2 = new UIInteractivePlayer(handLayoutPlayer, discardPilePlayer);
+        UIInteractivePlayer p2 = new UIInteractivePlayer(handLayoutPlayer, discardPilePlayer, scoreViewPlayer);
         Cribbage game = new Cribbage(p1, p2, 1);
 
         RunGameRunnable rgr = new RunGameRunnable(game, p1, p2, this);
