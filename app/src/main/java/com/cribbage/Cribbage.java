@@ -1,5 +1,7 @@
 package com.cribbage;
 
+import com.rr.cribbage_android.PlayingCardView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,20 +46,29 @@ public class Cribbage implements Game {
 
     }
 
-    public boolean scorePlayers() {
-        /* Score hands and crib */
-        for(int i = 0; i < this.players.length; i++){
-            Player cur_play = this.players[(this.dealer+i+1)%this.players.length];
-            cur_play.increaseScore(cur_play.getHand().scoreHand());
-            if(isDone()) return true;
-        }
-        this.players[this.dealer].increaseScore(this.crib.scoreHand());
-        if(isDone()) return true ;
+    public boolean dealAndDiscard() {
+        deck.shuffle();
+        this.starter = deck.deal(1)[0];
 
-        /* Set up next deal */
-        this.players[dealer].setDealer(false);
-        this.dealer = (this.dealer+1)%this.players.length;
-        this.players[dealer].setDealer(true);
+        if(starter.rank == 11) this.players[dealer].increaseScore(2);
+        if(isDone()) return true;
+
+        /* Deal and discard, also set up the crib */
+        this.crib.clear();
+        for(Player p : this.players){
+            Hand hand = p.getHand();
+            hand.clear();
+            hand.add(deck.deal(6));
+//            System.out.print(p.toString() + " --> "); // TESTING
+            crib.add(p.discard());
+            p.setPeg();
+            hand.add(starter);
+            hand.setStarter(starter);
+//            System.out.println(p.toString() + " " + p.hand.scoreHand()); // TESTING
+        }
+        if(this.players.length == 3) this.crib.add(this.deck.deal(1));
+        this.crib.add(starter);
+        this.crib.setStarter(starter);
         return false;
     }
 
@@ -103,29 +114,20 @@ public class Cribbage implements Game {
         return false;
     }
 
-    public boolean dealAndDiscard() {
-        deck.shuffle();
-        this.starter = deck.deal(1)[0];
-
-        if(starter.rank == 11) this.players[dealer].increaseScore(2);
-        if(isDone()) return true;
-
-        /* Deal and discard, also set up the crib */
-        this.crib.clear();
-        for(Player p : this.players){
-            Hand hand = p.getHand();
-            hand.clear();
-            hand.add(deck.deal(6));
-//            System.out.print(p.toString() + " --> "); // TESTING
-            crib.add(p.discard());
-            p.setPeg();
-            hand.add(starter);
-            hand.setStarter(starter);
-//            System.out.println(p.toString() + " " + p.hand.scoreHand()); // TESTING
+    public boolean scorePlayers() {
+        /* Score hands and crib */
+        for(int i = 0; i < this.players.length; i++){
+            Player cur_play = this.players[(this.dealer+i+1)%this.players.length];
+            cur_play.increaseScore(cur_play.getHand().scoreHand());
+            if(isDone()) return true;
         }
-        if(this.players.length == 3) this.crib.add(this.deck.deal(1));
-        this.crib.add(starter);
-        this.crib.setStarter(starter);
+        this.players[this.dealer].increaseScore(this.crib.scoreHand());
+        if(isDone()) return true ;
+
+        /* Set up next deal */
+        this.players[dealer].setDealer(false);
+        this.dealer = (this.dealer+1)%this.players.length;
+        this.players[dealer].setDealer(true);
         return false;
     }
 
@@ -163,8 +165,20 @@ public class Cribbage implements Game {
         return scores;
     }
 
+    /**
+     * Returns the starter card
+     * @return The starter card for the current hand
+     */
     public Card getStarter(){
         return this.starter;
+    }
+
+    /**
+     * Returns the current dealing player/owner of the crib
+     * @return The current dealing player
+     */
+    public Player getDealer(){
+        return players[dealer];
     }
 
     /*TODO for pegging run count use Hand.isRun(set) where set increasingly becomes last n elements in

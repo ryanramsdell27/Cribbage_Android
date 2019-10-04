@@ -26,7 +26,7 @@ public class UICPUPlayer extends UIPlayer {
         for(Card c:ccl_hand){
             PlayingCardView pcv = new PlayingCardView(handLayout.getContext());
             pcv.setCard(c);
-            pcv.showCardFace(true);
+            pcv.showCardFace(false);
             hand.add(pcv);
         }
         handLayout.post(new SendDiscardUpdateUI(hand));
@@ -69,6 +69,7 @@ public class UICPUPlayer extends UIPlayer {
             @Override
             public void run() {
                 finalPeggedView.performClick();
+                finalPeggedView.showCardFace(true);
             }
         });
         return pegged;

@@ -67,7 +67,8 @@
             android:layout_height="0dp"
             android:layout_marginBottom="4dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline2"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="8dp"
             app:layout_constraintTop_toTopOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintEnd_toEndOf="parent"
@@ -91,10 +92,10 @@
             android:layout_height="0dp"
             android:layout_marginBottom="4dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline2"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             app:layout_constraintTop_toTopOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginEnd="0dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"/>
 
@@ -104,31 +105,26 @@
             android:layout_height="wrap_content"
             android:id="@+id/CribPointer"
             android:layout_margin="8dp"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/guideline6"
             app:layout_constraintEnd_toStartOf="@+id/guideline5"
             app:layout_constraintStart_toStartOf="@+id/guideline4"/>
 
     <TextView
-            android:text="Opponent: Score"
+            android:text="0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ScoreOpponent"
             android:layout_margin="8dp"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/guideline6"/>
 
     <TextView
-            android:text="Player: Score"
+            android:text="0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ScorePlayer"
             android:layout_margin="8dp"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/guideline6"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline5"/>
 
     <com.rr.cribbage_android.PlayingCardView
@@ -136,11 +132,38 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:id="@+id/StarterView"
-            android:layout_margin="8dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
             app:layout_constraintEnd_toEndOf="@id/guideline5"
             app:layout_constraintTop_toTopOf="@+id/guideline"
             app:layout_constraintBottom_toBottomOf="@id/guideline2"/>
+
+    <TextView
+            android:text="Opponent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/ScoreOpponent"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline6"/>
+
+    <TextView
+            android:text="Player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2"
+            app:layout_constraintStart_toEndOf="@+id/ScorePlayer"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline6"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

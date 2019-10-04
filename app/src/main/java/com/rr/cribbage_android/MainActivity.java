@@ -1,16 +1,15 @@
 package com.rr.cribbage_android;
 
 import android.app.Activity;
-import android.content.Context;
+import android.os.Bundle;
 import android.os.ConditionVariable;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toolbar;
-import com.cribbage.*;
+import com.cribbage.CPUPlayerAVG;
+import com.cribbage.Cribbage;
 
 import java.util.Arrays;
 
@@ -57,6 +56,7 @@ public class MainActivity extends Activity {
         private HandLayout handLayoutPlayer, handLayoutOpponent;
         private DiscardPileLayout discardPilePlayer, discardPileOpponent;
         private PlayingCardView starterView;
+        private TextView cribPointer;
 
         RunGameRunnable(Cribbage game, UIPlayer p1, UIPlayer p2, Activity mainActivity){
             this.game = game;
@@ -70,6 +70,7 @@ public class MainActivity extends Activity {
             this.discardPilePlayer   = mainActivity.findViewById(R.id.DiscardPilePlayer);
             this.discardPileOpponent = mainActivity.findViewById(R.id.DiscardPileOpponent);
             this.starterView = mainActivity.findViewById(R.id.StarterView);
+            this.cribPointer = mainActivity.findViewById(R.id.CribPointer);
 
             this.discardPilePlayer.setInputLock(inputLock);
         }
@@ -80,6 +81,8 @@ public class MainActivity extends Activity {
                 p1.clearHands();
                 p2.clearHands();
                 this.starterView.showCardFace(false);
+                if(p1 == this.game.getDealer()) this.cribPointer.setText("Opponent's crib");
+                else this.cribPointer.setText("Player's crib");
 
                 this.game.dealAndDiscard();
                 // Move discards to crib pile
