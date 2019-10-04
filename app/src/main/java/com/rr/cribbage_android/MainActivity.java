@@ -56,6 +56,7 @@ public class MainActivity extends Activity {
         private Activity mainActivity;
         private HandLayout handLayoutPlayer, handLayoutOpponent;
         private DiscardPileLayout discardPilePlayer, discardPileOpponent;
+        private PlayingCardView starterView;
 
         RunGameRunnable(Cribbage game, UIPlayer p1, UIPlayer p2, Activity mainActivity){
             this.game = game;
@@ -68,6 +69,7 @@ public class MainActivity extends Activity {
             this.handLayoutOpponent  = mainActivity.findViewById(R.id.HandLayoutOpponent);
             this.discardPilePlayer   = mainActivity.findViewById(R.id.DiscardPilePlayer);
             this.discardPileOpponent = mainActivity.findViewById(R.id.DiscardPileOpponent);
+            this.starterView = mainActivity.findViewById(R.id.StarterView);
 
             this.discardPilePlayer.setInputLock(inputLock);
         }
@@ -77,6 +79,7 @@ public class MainActivity extends Activity {
             while(!this.game.isDone()){
                 p1.clearHands();
                 p2.clearHands();
+                this.starterView.showCardFace(false);
 
                 this.game.dealAndDiscard();
                 // Move discards to crib pile
@@ -91,6 +94,9 @@ public class MainActivity extends Activity {
 
 
                 inputLock.close();
+                this.starterView.setCard(this.game.getStarter());
+                this.starterView.showCardFace(true);
+
                 this.discardPileOpponent.setStackStyle(DiscardPileLayout.StackStyle.PEG);
                 this.discardPilePlayer.setStackStyle(DiscardPileLayout.StackStyle.PEG);
                 this.game.peg();
@@ -99,7 +105,7 @@ public class MainActivity extends Activity {
                 // switch discard piles back to discard style
                 this.discardPileOpponent.setStackStyle(DiscardPileLayout.StackStyle.DISCARD);
                 this.discardPilePlayer.setStackStyle(DiscardPileLayout.StackStyle.DISCARD);
-                inputLock.block();
+//                inputLock.block();
                 this.game.scorePlayers();
 
                 Log.d(TAG, Arrays.toString(this.game.getScore()));

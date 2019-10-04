@@ -12,6 +12,7 @@ public class Cribbage implements Game {
     int dealer;
     Deck deck;
     Hand crib;
+    Card starter;
 
     /**
      * Creates a new deck, shuffles, and deals to players
@@ -104,7 +105,8 @@ public class Cribbage implements Game {
 
     public boolean dealAndDiscard() {
         deck.shuffle();
-        Card starter = deck.deal(1)[0];
+        this.starter = deck.deal(1)[0];
+
         if(starter.rank == 11) this.players[dealer].increaseScore(2);
         if(isDone()) return true;
 
@@ -159,6 +161,10 @@ public class Cribbage implements Game {
             scores[i] = this.players[i].getScore();
         }
         return scores;
+    }
+
+    public Card getStarter(){
+        return this.starter;
     }
 
     /*TODO for pegging run count use Hand.isRun(set) where set increasingly becomes last n elements in

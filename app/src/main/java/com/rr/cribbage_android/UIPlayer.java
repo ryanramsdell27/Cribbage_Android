@@ -55,7 +55,12 @@ public abstract class UIPlayer extends Player {
     public void increaseScore(int score){
         super.increaseScore(score);
         final String scoreText = String.valueOf(this.getScore());
-        this.scoreView.setText(scoreText);
+        this.scoreView.post(new Runnable() {
+            @Override
+            public void run() {
+                scoreView.setText(scoreText);
+            }
+        });
     }
 
 

@@ -98,21 +98,6 @@
             android:layout_marginStart="8dp"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"/>
 
-    <Button
-            android:text="UI-Lock"
-            android:onClick="openInputLock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/button"
-            app:layout_constraintStart_toStartOf="@+id/guideline4"
-            android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline5"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="@+id/guideline"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline2"/>
-
     <TextView
             android:text="Crib Pointer"
             android:layout_width="wrap_content"
@@ -145,6 +130,17 @@
             app:layout_constraintBottom_toTopOf="@+id/guideline6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline5"/>
+
+    <com.rr.cribbage_android.PlayingCardView
+            android:src="@drawable/back"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:id="@+id/StarterView"
+            android:layout_margin="8dp"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintEnd_toEndOf="@id/guideline5"
+            app:layout_constraintTop_toTopOf="@+id/guideline"
+            app:layout_constraintBottom_toBottomOf="@id/guideline2"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
