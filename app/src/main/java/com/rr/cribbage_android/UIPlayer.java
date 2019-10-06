@@ -63,7 +63,6 @@ public abstract class UIPlayer extends Player {
         });
     }
 
-
     class SendDiscardUpdateUI implements Runnable{
         private List<PlayingCardView> hand;
         public SendDiscardUpdateUI(List<PlayingCardView> hand){

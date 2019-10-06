@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 import com.cribbage.CPUPlayerAVG;
 import com.cribbage.Cribbage;
@@ -73,6 +74,7 @@ public class MainActivity extends Activity {
             this.cribPointer = mainActivity.findViewById(R.id.CribPointer);
 
             this.discardPilePlayer.setInputLock(inputLock);
+            this.discardPilePlayer.setConfirmButton((Button) mainActivity.findViewById(R.id.confirmButton));
         }
 
         @Override

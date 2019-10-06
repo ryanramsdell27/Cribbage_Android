@@ -31,11 +31,20 @@ public class UIInteractivePlayer extends UIPlayer {
         handLayout.post(new SendDiscardUpdateUI(hand));
 
         List<PlayingCardView> hand_list = this.discardLayout.getHandList() ;
-        while (hand_list == null || hand_list.size() < 2){
+        boolean confirmed = false;
+        while (!confirmed && (hand_list == null || hand_list.size() < 2)) {
+            ((DiscardPileLayout) this.discardLayout).showConfirmButton(false);
             uiLock.close();
             uiLock.block();
             hand_list = this.discardLayout.getHandList();
+            if(hand_list != null && hand_list.size() == 2) {
+                ((DiscardPileLayout) this.discardLayout).showConfirmButton(true);
+                uiLock.close();
+                uiLock.block();
+                hand_list = this.discardLayout.getHandList();
+            }
         }
+        ((DiscardPileLayout) this.discardLayout).showConfirmButton(false);
 
 
         Card [] dis = new Card[hand_list.size()];
