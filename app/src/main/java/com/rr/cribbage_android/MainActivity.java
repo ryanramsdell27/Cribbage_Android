@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import com.cribbage.CPUPlayerAVG;
+import com.cribbage.CPUPlayerBasic;
 import com.cribbage.Cribbage;
 
 import java.util.Arrays;
@@ -35,8 +36,7 @@ public class MainActivity extends Activity {
         HandLayout discardPilePlayer = findViewById(R.id.DiscardPilePlayer);
         TextView scoreViewPlayer = findViewById(R.id.ScorePlayer);
 
-        UICPUPlayer p1 = new UICPUPlayer(new CPUPlayerAVG(), handLayoutOpponent, discardPileOpponent, scoreViewOpponent);
-        //WrapperCPUPlayer p2 = new WrapperCPUPlayer(new CPUPlayerAVG(), handLayoutOpponent);
+        UICPUPlayer p1 = new UICPUPlayer(new CPUPlayerBasic(), handLayoutOpponent, discardPileOpponent, scoreViewOpponent);
         UIInteractivePlayer p2 = new UIInteractivePlayer(handLayoutPlayer, discardPilePlayer, scoreViewPlayer);
         Cribbage game = new Cribbage(p1, p2, 1);
 
@@ -83,8 +83,15 @@ public class MainActivity extends Activity {
                 p1.clearHands();
                 p2.clearHands();
                 this.starterView.showCardFace(false);
-                if(p1 == this.game.getDealer()) this.cribPointer.setText("Opponent's crib");
-                else this.cribPointer.setText("Player's crib");
+                final String cribPointerText;
+                if(p1 == this.game.getDealer()) cribPointerText = "Opponent's crib";
+                else cribPointerText = "Player's crib";
+                this.handLayoutOpponent.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        cribPointer.setText(cribPointerText);
+                    }
+                });
 
                 this.game.dealAndDiscard();
                 // Move discards to crib pile
