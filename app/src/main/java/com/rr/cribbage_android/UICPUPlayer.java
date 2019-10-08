@@ -8,6 +8,8 @@ import com.cribbage.Card;
 import com.cribbage.Hand;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class UICPUPlayer extends UIPlayer {
@@ -22,11 +24,12 @@ public class UICPUPlayer extends UIPlayer {
     @Override
     public Card[] discard() {
         List<Card> ccl_hand = player.getHand().getHand();
+        Collections.sort(ccl_hand);
         ArrayList<PlayingCardView> hand = new ArrayList<>();
         for(Card c:ccl_hand){
             PlayingCardView pcv = new PlayingCardView(handLayout.getContext());
             pcv.setCard(c);
-            pcv.showCardFace(false);
+            pcv.showCardFace(true);
             hand.add(pcv);
         }
         handLayout.post(new SendDiscardUpdateUI(hand));
