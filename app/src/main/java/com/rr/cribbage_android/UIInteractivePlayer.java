@@ -9,6 +9,7 @@ import com.cribbage.Hand;
 import com.cribbage.Player;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class UIInteractivePlayer extends UIPlayer {
@@ -21,6 +22,7 @@ public class UIInteractivePlayer extends UIPlayer {
     @Override
     public Card[] discard() {
         List<Card> ccl_hand = this.getHand().getHand();
+        Collections.sort(ccl_hand);
         ArrayList<PlayingCardView> hand = new ArrayList<>();
         for (Card c : ccl_hand) {
             PlayingCardView pcv = new PlayingCardView(handLayout.getContext());

@@ -77,7 +77,7 @@ public class Cribbage implements Game {
         boolean can_peg = true;
         int pegger = (this.dealer+1)%this.players.length;
         int running_sum = 0;
-        ArrayList<Card> peg_pile = new ArrayList<Card>();
+        ArrayList<Card> peg_pile = new ArrayList<>();
         while(can_peg) {
             Card played = players[pegger].peg(peg_pile);
             if(played != null) {
@@ -90,12 +90,22 @@ public class Cribbage implements Game {
                 // Longest possible run is A,2,3,4,5,6,7 which adds to 28
                 // Largest pile is 13 (for >2 players) of A,A,A,A,2,2,2,2,3,3,3,3,4 - also 28
                 for (int i = 2; i < peg_pile.size(); i++) {
-                    List<Card> sub_list = peg_pile.subList(peg_pile.size() - i - 1, peg_pile.size() - 1);
-                    if (Hand.isDuplicate(sub_list)) this.players[pegger].increaseScore(2);
+                    List<Card> sub_list = new ArrayList<>(peg_pile.subList(peg_pile.size() - i - 1, peg_pile.size()));
                     if (Hand.isRun(sub_list)) {
                         if (i == 3) this.players[pegger].increaseScore(3);
                         else this.players[pegger].increaseScore(1);
                     }
+                }
+                int top_rank = peg_pile.get(peg_pile.size()-1).getRank();
+                int num_dups = 0;
+                int [] vals = {2,6,12};
+                for(int i = peg_pile.size() - 2; i >= 0; i--){
+//                    System.out.println(peg_pile.get(peg_pile.size()-1) +  " " + top_rank + " ===== " + peg_pile.get(i) + " "+ peg_pile.get(i).getRank());
+                    if(peg_pile.get(i).getRank() == top_rank){
+                        this.players[pegger].increaseScore(vals[num_dups]);
+                        num_dups++;
+                    }
+                    else break;
                 }
 
                 if (Hand.isTotal(peg_pile, 31)) this.players[pegger].increaseScore(1);
