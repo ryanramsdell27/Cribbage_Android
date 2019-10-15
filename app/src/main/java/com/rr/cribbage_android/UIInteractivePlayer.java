@@ -1,12 +1,7 @@
 package com.rr.cribbage_android;
 
-import android.os.ConditionVariable;
-import android.util.Log;
 import android.widget.TextView;
-import com.cribbage.CPUPlayer;
 import com.cribbage.Card;
-import com.cribbage.Hand;
-import com.cribbage.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -79,7 +74,8 @@ public class UIInteractivePlayer extends UIPlayer {
         for(Card c:peg_pile){
             total += c.getValue();
         }
-        Log.d(TAG, "(player) total is " + total);
+//        Log.d(TAG, "(player) total is " + total);
+        this.updatePegCountView(total);
         for(PlayingCardView pcv:this.handLayout.getHandList()){
             pcv.setPeggable(pcv.getCard().getValue() + total <= 31);
         }

@@ -57,7 +57,7 @@ public class MainActivity extends Activity {
         private HandLayout handLayoutPlayer, handLayoutOpponent;
         private DiscardPileLayout discardPilePlayer, discardPileOpponent;
         private PlayingCardView starterView;
-        private TextView cribPointer;
+        private TextView cribPointer, pegCountView;
 
         RunGameRunnable(Cribbage game, UIPlayer p1, UIPlayer p2, Activity mainActivity){
             this.game = game;
@@ -72,6 +72,9 @@ public class MainActivity extends Activity {
             this.discardPileOpponent = mainActivity.findViewById(R.id.DiscardPileOpponent);
             this.starterView = mainActivity.findViewById(R.id.StarterView);
             this.cribPointer = mainActivity.findViewById(R.id.CribPointer);
+            this.pegCountView = mainActivity.findViewById(R.id.pegCountView);
+            this.p1.setPegCountView(pegCountView);
+            this.p2.setPegCountView(pegCountView);
 
             this.discardPilePlayer.setInputLock(inputLock);
             this.discardPilePlayer.setConfirmButton((Button) mainActivity.findViewById(R.id.confirmButton));
@@ -82,9 +85,15 @@ public class MainActivity extends Activity {
             while(!this.game.isDone()){
                 p1.clearHands();
                 p2.clearHands();
-                this.starterView.showCardFace(false);
+                this.pegCountView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        pegCountView.setText("");
+                    }
+                });
+                showCard(this.starterView, false);
                 final String cribPointerText;
-                if(p1 == this.game.getDealer()) cribPointerText = "Opponent's crib";
+                if(p1 == this.game.getDealer()) cribPointerText = "Opponent's\ncrib";
                 else cribPointerText = "Player's crib";
                 this.handLayoutOpponent.post(new Runnable() {
                     @Override
@@ -107,11 +116,15 @@ public class MainActivity extends Activity {
 
                 inputLock.close();
                 this.starterView.setCard(this.game.getStarter());
-                this.starterView.showCardFace(true);
 
                 this.discardPileOpponent.setStackStyle(DiscardPileLayout.StackStyle.PEG);
                 this.discardPilePlayer.setStackStyle(DiscardPileLayout.StackStyle.PEG);
                 this.game.peg();
+                showCard(this.starterView,true);
+                inputLock.close();
+                inputLock.block(3000);
+
+//                this.starterView.setVisibility(View.VISIBLE);
                 // return pegging card to hands
                 // TODO implement this
                 // switch discard piles back to discard style
@@ -122,6 +135,17 @@ public class MainActivity extends Activity {
 
                 Log.d(TAG, Arrays.toString(this.game.getScore()));
             }
+        }
+
+        public void showCard(final PlayingCardView pcv, final boolean show){
+            this.handLayoutPlayer.post(new Runnable() {
+                @Override
+                public void run() {
+                    pcv.showCardFace(true);
+                    if(show) pcv.setVisibility(View.VISIBLE);
+                    else pcv.setVisibility(View.INVISIBLE);
+                }
+            });
         }
     }
 

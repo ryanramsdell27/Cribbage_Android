@@ -29,7 +29,7 @@ public class UICPUPlayer extends UIPlayer {
         for(Card c:ccl_hand){
             PlayingCardView pcv = new PlayingCardView(handLayout.getContext());
             pcv.setCard(c);
-            pcv.showCardFace(true);
+            pcv.showCardFace(false);
             hand.add(pcv);
         }
         handLayout.post(new SendDiscardUpdateUI(hand));
@@ -58,7 +58,8 @@ public class UICPUPlayer extends UIPlayer {
         for(Card c:peg_pile){
             total += c.getValue();
         }
-        Log.d(TAG, "total is " + total);
+//        Log.d(TAG, "total is " + total);
+        this.updatePegCountView(total);
         Card pegged = this.player.peg(peg_pile);
         PlayingCardView peggedView = null;
         for(PlayingCardView pcv : this.handLayout.getHandList()){

@@ -76,13 +76,13 @@ public class PlayingCardView extends AppCompatImageView {
         this.faceUp = show;
     }
 
-    public static class PlayingCardViewOutlineProvider extends ViewOutlineProvider{
-        @Override
-        public void getOutline(View view, Outline outline) {
-            Rect rect = new Rect();
-            view.getDrawingRect(rect);
-            outline.setRoundRect( rect, 50);
-        }
-    }
+//    public static class PlayingCardViewOutlineProvider extends ViewOutlineProvider{
+//        @Override
+//        public void getOutline(View view, Outline outline) {
+//            Rect rect = new Rect();
+//            view.getDrawingRect(rect);
+//            outline.setRoundRect( rect, 50);
+//        }
+//    }
 
 }

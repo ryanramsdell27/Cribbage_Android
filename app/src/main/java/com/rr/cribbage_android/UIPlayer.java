@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class UIPlayer extends Player {
     HandLayout handLayout;
     HandLayout discardLayout;
-    TextView scoreView;
+    TextView scoreView, pegCountView;
     ConditionVariable uiLock;
 
     public UIPlayer(HandLayout handLayout, HandLayout discardLayout, TextView scoreView){
@@ -23,6 +23,10 @@ public abstract class UIPlayer extends Player {
 
     public void setUiLockVariable(ConditionVariable uiLock){
         this.uiLock = uiLock;
+    }
+
+    public void setPegCountView(TextView pegCountView){
+        this.pegCountView = pegCountView;
     }
 
     public void clearHands(){
@@ -51,6 +55,15 @@ public abstract class UIPlayer extends Player {
         return null;
     }
 
+    public void updatePegCountView(final int count){
+        this.handLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                pegCountView.setText(String.valueOf(count));
+            }
+        });
+    }
+
     @Override
     public void increaseScore(int score){
         super.increaseScore(score);
@@ -63,6 +76,7 @@ public abstract class UIPlayer extends Player {
         });
     }
 
+    //TODO make static
     class SendDiscardUpdateUI implements Runnable{
         private List<PlayingCardView> hand;
         public SendDiscardUpdateUI(List<PlayingCardView> hand){
